@@ -23,6 +23,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
     private Drawable mDeleteKeyDrawable;   //删除按键背景图片
     private int mKryboardBackgroud;
     private Drawable mKryDrawable;   //按键背景
+    private int mKeySize;
     private int mPaddingLeft;
     private int mPaddingRight;
     private int mPaddingTop;
@@ -47,6 +48,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         mPaddingRight = (int) ta.getDimension(R.styleable.NumKeyView_rightPadding, 0);
         mPaddingTop = (int) ta.getDimension(R.styleable.NumKeyView_topPadding, 0);
         mPaddingBottom = (int) ta.getDimension(R.styleable.NumKeyView_bottomPadding, 0);
+        mKeySize = (int) ta.getDimension(R.styleable.NumKeyView_keyTextSize, 0);
         ta.recycle();
 
         //获取xml中的按键布局
@@ -91,7 +93,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
                     } else {
                         paint.setColor(getContext().getResources().getColor(R.color.c000000));
-                        paint.setTextSize(sp2px(25));
+                        paint.setTextSize(mKeySize);
                     }
                     Rect rect = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
                     Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();

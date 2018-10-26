@@ -32,21 +32,17 @@
             android:id="@+id/keyboardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="17dp"
-            android:layout_marginTop="18dp"
-
-
-            android:layout_marginRight="17dp"
-            android:layout_marginBottom="20dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:layout_marginLeft="17dp"
+            android:layout_marginTop="18dp"
+            android:layout_marginRight="17dp"
+            android:layout_marginBottom="20dp"
 
-
-            app:bottomPadding="20dp"
+            app:keyTextSize="25sp"
             app:deleteDrawable="@drawable/ic_calculator_delete"
             app:keyBackgBackground="@drawable/key_bg_view"
             app:keyboardBackgBackground="@color/cCDCDCD" />
     </LinearLayout>
-
 
 </RelativeLayout>
