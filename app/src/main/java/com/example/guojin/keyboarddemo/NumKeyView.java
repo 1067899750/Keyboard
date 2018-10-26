@@ -44,11 +44,11 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         mKryDrawable = ta.getDrawable(R.styleable.NumKeyView_keyBackgBackground);
         mDeleteKeyDrawable = ta.getDrawable(R.styleable.NumKeyView_deleteDrawable); //删除按键颜色
         mKryboardBackgroud = ta.getColor(R.styleable.NumKeyView_keyboardBackgBackground, Color.WHITE); //keyboard背景颜色
-        mPaddingLeft = (int) ta.getDimension(R.styleable.NumKeyView_leftPadding, 0);
-        mPaddingRight = (int) ta.getDimension(R.styleable.NumKeyView_rightPadding, 0);
-        mPaddingTop = (int) ta.getDimension(R.styleable.NumKeyView_topPadding, 0);
-        mPaddingBottom = (int) ta.getDimension(R.styleable.NumKeyView_bottomPadding, 0);
-        mKeySize = (int) ta.getDimension(R.styleable.NumKeyView_keyTextSize, 0);
+        mPaddingLeft = (int) ta.getDimension(R.styleable.NumKeyView_leftPadding, 1);
+        mPaddingRight = (int) ta.getDimension(R.styleable.NumKeyView_rightPadding, 1);
+        mPaddingTop = (int) ta.getDimension(R.styleable.NumKeyView_topPadding, 1);
+        mPaddingBottom = (int) ta.getDimension(R.styleable.NumKeyView_bottomPadding, 1);
+        mKeySize = (int) ta.getDimension(R.styleable.NumKeyView_keyTextSize, 15);
         ta.recycle();
 
         //获取xml中的按键布局
