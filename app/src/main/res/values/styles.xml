@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="PopWindowstyle">
+        <item name="android:windowEnterAnimation">@anim/showanim</item>
+        <item name="android:windowExitAnimation">@anim/dismissanim</item>
+    </style>
+
+
+    //键盘属性
+    <declare-styleable name="NumKeyView">
+        <attr name="keyboardBackgBackground" format="color|reference"></attr>
+        <attr name="keyBackgBackground" format="color|reference"></attr>
+        <attr name="deleteDrawable" format="reference"></attr>
+        <attr name="leftPadding" format="dimension"></attr>
+        <attr name="rightPadding" format="dimension"></attr>
+        <attr name="topPadding" format="dimension"></attr>
+        <attr name="bottomPadding" format="dimension"></attr>
+    </declare-styleable>
+
+
+
+</resources>
