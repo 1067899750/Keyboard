@@ -42,6 +42,7 @@
             app:keyTextSize="25sp"
             app:deleteDrawable="@drawable/ic_calculator_delete"
             app:keyBackgBackground="@drawable/key_bg_view"
+            app:keyClickBackgBackground="@drawable/key_click_bg_view"
             app:keyboardBackgBackground="@color/cCDCDCD" />
     </LinearLayout>
 

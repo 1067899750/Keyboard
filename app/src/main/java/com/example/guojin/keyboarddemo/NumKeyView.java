@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
+import android.util.Log;
 
 import java.util.List;
 import java.util.PropertyResourceBundle;
@@ -23,11 +24,14 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
     private Drawable mDeleteKeyDrawable;   //删除按键背景图片
     private int mKryboardBackgroud;
     private Drawable mKryDrawable;   //按键背景
+    private Drawable mKryClickDrawable;
     private int mKeySize;
     private int mPaddingLeft;
     private int mPaddingRight;
     private int mPaddingTop;
     private int mPaddingBottom;
+    private Keyboard.Key mKey;
+    private boolean isClick = false;
 
     public NumKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -42,6 +46,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NumKeyView);
         mKryDrawable = ta.getDrawable(R.styleable.NumKeyView_keyBackgBackground);
+        mKryClickDrawable = ta.getDrawable(R.styleable.NumKeyView_keyClickBackgBackground);
         mDeleteKeyDrawable = ta.getDrawable(R.styleable.NumKeyView_deleteDrawable); //删除按键颜色
         mKryboardBackgroud = ta.getColor(R.styleable.NumKeyView_keyboardBackgBackground, Color.WHITE); //keyboard背景颜色
         mPaddingLeft = (int) ta.getDimension(R.styleable.NumKeyView_leftPadding, 1);
@@ -72,11 +77,6 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         if (keyboard == null) return;
         List<Keyboard.Key> keys = keyboard.getKeys();
         if (keys != null && keys.size() > 0) {
-            Paint paint = new Paint();
-            paint.setTextAlign(Paint.Align.CENTER);
-            Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
-            paint.setTypeface(font);
-            paint.setAntiAlias(true);
 
             for (Keyboard.Key key : keys) {
                 if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
@@ -89,25 +89,53 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
                 }
 
                 if (key.label != null) {
-                    if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
-
-                    } else {
-                        paint.setColor(getContext().getResources().getColor(R.color.c000000));
-                        paint.setTextSize(mKeySize);
-                    }
-                    Rect rect = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
-                    Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
-                    int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
-                    // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
-                    paint.setTextAlign(Paint.Align.CENTER);
-                    canvas.drawText(key.label.toString(), rect.centerX(), baseline, paint);
+                    drawText(key, canvas);
                 }
             }
         }
+
+        if (mKey != null) {
+            if (isClick) {
+                drawKeyClickBackGround(mKey, canvas);
+                //绘制按键图片
+                drawText(mKey, canvas);
+            } else {
+                drawKeyBackGround(mKey, canvas);
+                //绘制按键图片
+                drawText(mKey, canvas);
+
+            }
+        }
+
     }
 
     //绘制边框
     private void drawKeyboardBorder(Canvas canvas) {
+
+    }
+
+    //绘制边框
+    private void drawText(Keyboard.Key key, Canvas canvas) {
+        //删除按键
+        if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
+            drawkeyDelete(key, canvas);
+
+        } else {
+            Paint paint = new Paint();
+            paint.setTextAlign(Paint.Align.CENTER);
+            Typeface font = Typeface.create(Typeface.SANS_SERIF, Typeface.BOLD);
+            paint.setTypeface(font);
+            paint.setAntiAlias(true);
+            paint.setColor(getContext().getResources().getColor(R.color.c000000));
+            paint.setTextSize(mKeySize);
+
+            Rect rect = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
+            Paint.FontMetricsInt fontMetrics = paint.getFontMetricsInt();
+            int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
+            // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(key.label.toString(), rect.centerX(), baseline, paint);
+        }
 
     }
 
@@ -116,6 +144,13 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         mKryDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         mKryDrawable.draw(canvas);
     }
+
+    //点击时的背景
+    private void drawKeyClickBackGround(Keyboard.Key key, Canvas canvas) {
+        mKryClickDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        mKryClickDrawable.draw(canvas);
+    }
+
 
     //删除键
     private void drawkeyDelete(Keyboard.Key key, Canvas canvas) {
@@ -151,6 +186,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     @Override
     public void onKey(int i, int[] ints) {
+        Log.e("---> : ", "onKey");
         if (i == Keyboard.KEYCODE_DELETE && mOnkeyPressListener != null) {
             //删除数据回调
             mOnkeyPressListener.onDeleteKey();
@@ -167,38 +203,46 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     @Override
     public void onPress(int i) {
-
+        Log.e("---> : ", "onPress" + " : " + i);
+        isClick = true;
+        setKeyBackground(i);
     }
 
     @Override
     public void onRelease(int i) {
-
+        Log.e("---> : ", "onRelease" + " : " + i);
+        isClick = false;
+        setKeyBackground(i);
     }
 
 
     @Override
     public void onText(CharSequence charSequence) {
-
+        Log.e("---> : ", "onText" + ":" + charSequence.toString());
     }
 
     @Override
     public void swipeRight() {
         super.swipeRight();
+        Log.e("---> : ", "swipeRight");
     }
 
     @Override
     public void swipeDown() {
         super.swipeDown();
+        Log.e("---> : ", "swipeDown");
     }
 
     @Override
     public void swipeLeft() {
         super.swipeLeft();
+        Log.e("---> : ", "swipeLeft");
     }
 
     @Override
     public void swipeUp() {
         super.swipeUp();
+        Log.e("---> : ", "swipeUp");
     }
 
 
@@ -208,6 +252,27 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         final float fontScale = getContext().getResources().getDisplayMetrics().scaledDensity;
         return (int) (spValue * fontScale + 0.5f);
     }
+
+    private void setKeyBackground(int i){
+        Keyboard keyboard = getKeyboard();
+        if (keyboard == null) return;
+        List<Keyboard.Key> keys = keyboard.getKeys();
+        for (int j =0; j < keys.size(); j ++){
+            Keyboard.Key key = keys.get(j);
+            if (key.codes[0] == i) {
+                mKey = keys.get(j);
+                break;
+            }
+        }
+
+        invalidate();
+    }
+
+
+
+
+
+
 
 
 }

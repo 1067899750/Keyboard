@@ -9,6 +9,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
+import android.text.Selection;
+import android.text.Spannable;
 import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.KeyEvent;
@@ -112,6 +114,8 @@ public class MainActivity extends AppCompatActivity {
                 mPop.showAtLocation(mLinearlayout, Gravity.BOTTOM, 0, 0);
 
                 mEditText.setInputType(inputType);
+                //设定光标位置
+                Selection.setSelection(mEditText.getText(), mEditText.getText().length());
                 return false;
             }
         });
