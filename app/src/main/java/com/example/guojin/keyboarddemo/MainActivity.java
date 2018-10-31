@@ -178,7 +178,11 @@ public class MainActivity extends AppCompatActivity {
         mKeyView.setOnKeyPressListener(new NumKeyView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
-                mEditText.append(text);
+                int index = mEditText.getSelectionStart();
+                Log.i("---> index : ", index + "");
+//                mEditText.append(text);
+                Editable editable = mEditText.getText();
+                editable.insert(index, text);
             }
 
             @Override
@@ -186,7 +190,9 @@ public class MainActivity extends AppCompatActivity {
                 int last = mEditText.getText().length();
                 if (last > 0) {
                     //删除最后一位
-                    mEditText.getText().delete(last - 1, last);
+                    int index = mEditText.getSelectionStart();
+                    Log.i("---> index : ", index + "");
+                    mEditText.getText().delete(index - 1, index);
                 }
             }
 
