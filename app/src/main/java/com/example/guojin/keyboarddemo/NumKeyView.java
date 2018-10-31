@@ -33,6 +33,8 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
     private Keyboard.Key mKey;
     private boolean isClick = false;
 
+    private OnKeyPressListener mOnkeyPressListener;
+
     public NumKeyView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
@@ -178,7 +180,7 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
         void onClearKey();
     }
 
-    private OnKeyPressListener mOnkeyPressListener;
+
 
     public void setOnKeyPressListener(OnKeyPressListener li) {
         mOnkeyPressListener = li;
@@ -264,7 +266,6 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
                 break;
             }
         }
-
         invalidate();
     }
 
