@@ -188,7 +188,10 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     @Override
     public void onKey(int i, int[] ints) {
-        Log.e("---> : ", "onKey");
+        if (i == 0){
+            return;
+        }
+        Log.e("---> key : ", "onKey");
         if (i == Keyboard.KEYCODE_DELETE && mOnkeyPressListener != null) {
             //删除数据回调
             mOnkeyPressListener.onDeleteKey();
@@ -205,14 +208,20 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     @Override
     public void onPress(int i) {
-        Log.e("---> : ", "onPress" + " : " + i);
+        if (i == 0){
+            return;
+        }
+        Log.e("---> key : ", "onPress" + " : " + i);
         isClick = true;
         setKeyBackground(i);
     }
 
     @Override
     public void onRelease(int i) {
-        Log.e("---> : ", "onRelease" + " : " + i);
+        if (i == 0){
+            return;
+        }
+        Log.e("---> key : ", "onRelease" + " : " + i);
         isClick = false;
         setKeyBackground(i);
     }
@@ -220,31 +229,31 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     @Override
     public void onText(CharSequence charSequence) {
-        Log.e("---> : ", "onText" + ":" + charSequence.toString());
+        Log.e("---> key : ", "onText" + ":" + charSequence.toString());
     }
 
     @Override
     public void swipeRight() {
         super.swipeRight();
-        Log.e("---> : ", "swipeRight");
+        Log.e("---> key : ", "swipeRight");
     }
 
     @Override
     public void swipeDown() {
         super.swipeDown();
-        Log.e("---> : ", "swipeDown");
+        Log.e("---> key : ", "swipeDown");
     }
 
     @Override
     public void swipeLeft() {
         super.swipeLeft();
-        Log.e("---> : ", "swipeLeft");
+        Log.e("---> key : ", "swipeLeft");
     }
 
     @Override
     public void swipeUp() {
         super.swipeUp();
-        Log.e("---> : ", "swipeUp");
+        Log.e("---> key : ", "swipeUp");
     }
 
 
