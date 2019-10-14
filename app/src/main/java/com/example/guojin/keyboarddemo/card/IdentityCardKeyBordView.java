@@ -17,6 +17,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.utils.BitmapUtils;
 
 
 import java.util.List;
@@ -50,7 +51,6 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
     private boolean isClick = false;
 
     private OnKeyPressListener mOnKeyPressListener;
-
 
     public IdentityCardKeyBordView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -109,7 +109,7 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
                     //数字键背景
                     drawKeyBackGround(key, canvas);
                     //绘制删除键背景
-                    drawKeyDelete(key, canvas);
+                    drawDeleteBitmap(key, canvas);
                 } else {
                     //数字键背景
                     drawKeyBackGround(key, canvas);
@@ -156,8 +156,8 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
     private void drawText(Keyboard.Key key, Canvas canvas) {
         //删除按键
         if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
-            drawKeyDelete(key, canvas);
-//            drawableToBitmap(key, canvas);
+            drawDeleteBitmap(key, canvas);
+
         } else {
             Paint paint = new Paint();
             paint.setTextAlign(Paint.Align.CENTER);
@@ -175,6 +175,21 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
             paint.setTextAlign(Paint.Align.CENTER);
             canvas.drawText(key.label.toString(), rect.centerX(), baseline, paint);
         }
+
+    }
+
+    /**
+     * 绘制删除按键
+     *
+     * @param key
+     * @param canvas
+     */
+    private void drawDeleteBitmap(Keyboard.Key key, Canvas canvas) {
+        Bitmap bitmap1 = BitmapUtils.drawableToBitmap(mDeleteKeyDrawable);
+        int width = bitmap1.getWidth() / 2;
+        int height = bitmap1.getHeight() / 2;
+        Rect rect = new Rect(key.x, key.y, key.x + key.width, key.y + key.height);
+        canvas.drawBitmap(bitmap1, rect.centerX() - width, rect.centerY() - height, null);
 
     }
 
@@ -201,65 +216,6 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
     }
 
 
-    /**
-     * 删除键图片
-     *
-     * @param key
-     * @param canvas
-     */
-    private void drawKeyDelete(Keyboard.Key key, Canvas canvas) {
-        int drawWidth = key.width;
-        int drawHeight = key.height;
-        drawWidth = drawWidth / 2;
-        drawHeight = drawHeight / 2;
-        int widthInterval = (key.width - drawWidth) / 2;
-        int heightInterval = (key.height - drawHeight) / 2;
-
-        Bitmap bitmap = Bitmap.createBitmap(
-                mDeleteKeyDrawable.getIntrinsicWidth(),
-                mDeleteKeyDrawable.getIntrinsicHeight(),
-                mDeleteKeyDrawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                        : Bitmap.Config.RGB_565);
-
-        Rect mTopSrcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        Rect mTopDestRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        canvas.drawBitmap(bitmap, mTopSrcRect, mTopDestRect, null);
-
-        mDeleteKeyDrawable.setBounds(key.x + widthInterval, key.y + heightInterval,
-                key.x + widthInterval + drawWidth, key.y + heightInterval + drawHeight);
-        mDeleteKeyDrawable.draw(canvas);
-
-
-
-
-    }
-
-
-    public void drawableToBitmap(Keyboard.Key key, Canvas canvas) {
-        int drawWidth = key.width;
-        int drawHeight = key.height;
-        drawWidth = drawWidth / 2;
-        drawHeight = drawHeight / 2;
-        int widthInterval = (key.width - drawWidth) / 2;
-        int heightInterval = (key.height - drawHeight) / 2;
-        Bitmap bitmap = Bitmap.createBitmap(
-                mDeleteKeyDrawable.getIntrinsicWidth(),
-                mDeleteKeyDrawable.getIntrinsicHeight(),
-                mDeleteKeyDrawable.getOpacity() != PixelFormat.OPAQUE ? Bitmap.Config.ARGB_8888
-                        : Bitmap.Config.RGB_565);
-
-        Canvas d = new Canvas(bitmap);
-        mDeleteKeyDrawable.setBounds(key.x + widthInterval, key.y + heightInterval,
-                key.x + widthInterval + drawWidth, key.y + heightInterval + drawHeight);
-        mDeleteKeyDrawable.draw(d);
-
-        Rect mTopSrcRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-        Rect mTopDestRect = new Rect(0, 0, bitmap.getWidth(), bitmap.getHeight());
-
-        canvas.drawBitmap(bitmap, mTopSrcRect, mTopDestRect, null);
-
-    }
 
     /**
      * 按键点击监听器

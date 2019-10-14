@@ -2,6 +2,7 @@ package com.example.guojin.keyboarddemo.computer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,6 +15,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.utils.BitmapUtils;
 
 import java.util.List;
 
@@ -206,6 +208,7 @@ public class ComputerKeyBordView extends KeyboardView implements KeyboardView.On
         mDeleteKeyDrawable.setBounds(key.x + widthInterval, key.y + heightInterval,
                 key.x + widthInterval + drawWidth, key.y + heightInterval + drawHeight);
         mDeleteKeyDrawable.draw(canvas);
+
     }
 
 
