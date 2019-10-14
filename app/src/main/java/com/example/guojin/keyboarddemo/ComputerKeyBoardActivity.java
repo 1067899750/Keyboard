@@ -1,6 +1,5 @@
 package com.example.guojin.keyboarddemo;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.ColorDrawable;
@@ -9,8 +8,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.text.Editable;
 import android.text.InputType;
-import android.text.Selection;
-import android.text.Spannable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,7 +17,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -58,7 +54,7 @@ import java.lang.reflect.Method;
  *                        '.:::::'                    ':'````..
  *
 */
-public class MainActivity extends AppCompatActivity {
+public class ComputerKeyBoardActivity extends AppCompatActivity {
 
     private EditText mEditText;
     private NumKeyView mKeyView;
@@ -80,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_computer_key_board);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mEditText = findViewById(R.id.et);
