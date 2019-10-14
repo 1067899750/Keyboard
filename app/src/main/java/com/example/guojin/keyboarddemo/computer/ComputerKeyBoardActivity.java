@@ -37,7 +37,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
     private EditText mEditText;
     private ComputerKeyBordView mKeyView;
-    private LinearLayout mLinearlayout;
+    private LinearLayout mLinearLayout;
     private PopupWindow mPop;
     private View mPopView;
     private RelativeLayout mRelativeLayout;
@@ -60,14 +60,15 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
         mEditText = findViewById(R.id.et);
 
-        mLinearlayout = findViewById(R.id.ln);
+        mLinearLayout = findViewById(R.id.ln);
 
 
         mPop = new PopupWindow();
         mPopView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.computer_keyboard_pop, null);
         mPop.setContentView(mPopView);
         mPop.setTouchable(true);
-        mPop.setFocusable(false); //设置焦点，是否点击外部会消失
+        //设置焦点，是否点击外部会消失
+        mPop.setFocusable(false);
         mPop.setBackgroundDrawable(new ColorDrawable());
         mPop.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         mPop.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -109,7 +110,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 //                int inputType = mEditText.getInputType();
 //                mEditText.setInputType(InputType.TYPE_NULL);// 让系统键盘不弹出
                 //点击按钮显示键盘
-                mPop.showAtLocation(mLinearlayout, Gravity.BOTTOM, 0, 0);
+                mPop.showAtLocation(mLinearLayout, Gravity.BOTTOM, 0, 0);
 
 //                mEditText.setInputType(inputType);
 //                //设定光标位置

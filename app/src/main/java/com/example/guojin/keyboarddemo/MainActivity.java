@@ -19,6 +19,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        startActivity(new Intent(MainActivity.this, IdentityCardActivity.class));
+
+        initEvent();
+
+    }
+
+    /**
+     * 点击事件
+     */
+    private void initEvent() {
         findViewById(R.id.btn_computer).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, IdentityCardActivity.class));
             }
         });
-
 
     }
 }

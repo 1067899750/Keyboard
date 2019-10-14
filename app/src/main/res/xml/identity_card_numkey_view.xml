@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Keyboard xmlns:android="http://schemas.android.com/apk/res/android"
-    android:horizontalGap="12dp"
-    android:verticalGap="14dp"
-    android:keyWidth="33.33333%p"
-    android:keyHeight="8%p">
-
+    android:horizontalGap="5dp"
+    android:verticalGap="5dp"
+    android:keyWidth="40%p"
+    android:keyHeight="7%p">
     <Row>
         <Key
             android:codes="49"
@@ -15,19 +14,25 @@
         <Key
             android:codes="51"
             android:keyLabel="3"/>
+    </Row>
+
+    <Row>
         <Key
             android:codes="52"
             android:keyLabel="4"/>
         <Key
             android:codes="53"
             android:keyLabel="5"/>
-    </Row>
-
-    <Row>
 
         <Key
             android:codes="54"
             android:keyLabel="6"/>
+    </Row>
+
+
+
+
+    <Row>
         <Key
             android:codes="55"
             android:keyLabel="7"/>
@@ -37,30 +42,45 @@
         <Key
             android:codes="57"
             android:keyLabel="9"/>
-        <Key
-            android:codes="48"
-            android:keyLabel="0"/>
+
     </Row>
+
+
 
     <Row>
         <Key
-            android:codes="43"
-            android:keyLabel="+"/>
+            android:codes="88"
+            android:keyLabel="X"/>
+
         <Key
-            android:codes="45"
-            android:keyLabel="-"/>
-        <Key
-            android:codes="46"
-            android:keyLabel="."/>
-        <!--KEYCODE_CANCEL-->
-        <Key
-            android:codes="-3"
-            android:keyLabel="C"/>
+            android:codes="48"
+            android:keyLabel="0"/>
+
         <!--KEYCODE_DELETE-->
         <Key
             android:codes="-5"
             android:isRepeatable="false"
-            android:keyIcon="@drawable/ic_calculator_delete"/>
+            android:keyEdgeFlags="right"
+            android:keyIcon="@drawable/identity_card_delete"/>
     </Row>
 
+
 </Keyboard>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
