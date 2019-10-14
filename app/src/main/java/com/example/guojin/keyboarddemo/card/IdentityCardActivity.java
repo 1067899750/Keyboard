@@ -63,30 +63,10 @@ public class IdentityCardActivity extends AppCompatActivity {
             }
         }
 
-        mIdentityCardPopupWindow = new IdentityCardPopupWindow(this);
-        mIdentityCardPopupWindow.showAtLocation(mEditText, mLinearLayout);
-        //设置回调，并进行文本的插入与删除
-        mIdentityCardPopupWindow.setOnKeyPressListener(new IdentityCardPopupWindow.OnKeyPressListener() {
-            @Override
-            public void onInertKey(String text) {
-                int index = mEditText.getSelectionStart();
-                Log.i("---> index : ", index + "");
-//                mEditText.append(text);
-                Editable editable = mEditText.getText();
-                editable.insert(index, text);
-            }
-
-            @Override
-            public void onDeleteKey() {
-                int last = mEditText.getText().length();
-                if (last > 0) {
-                    //删除最后一位
-                    int index = mEditText.getSelectionStart();
-                    Log.i("---> index : ", index + "");
-                    mEditText.getText().delete(index - 1, index);
-                }
-            }
-        });
+        mIdentityCardPopupWindow = new IdentityCardPopupWindow.Builder(this)
+                .setLocationView(mLinearLayout)
+                .setEditText(mEditText)
+                .create();
 
         //输入结束点击键盘确认键执行的 方法
         mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {

@@ -2,7 +2,9 @@ package com.example.guojin.keyboarddemo.card;
 
 import android.content.Context;
 import android.graphics.drawable.ColorDrawable;
+import android.text.Editable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -15,57 +17,48 @@ import android.widget.TextView;
 
 import com.example.guojin.keyboarddemo.R;
 
+import java.lang.ref.WeakReference;
+
 /**
  * @author puyantao
  * @describe 身份证键盘 PopupWindow
  * @create 2019/10/14 15:15
  */
-public class IdentityCardPopupWindow extends PopupWindow {
+public class IdentityCardPopupWindow{
+    private PopupWindow mPopupWindow;
     private View mPopView;
     private IdentityCardKeyBordView mKeyView;
-    private OnKeyPressListener mOnKeyPressListener;
+    private WeakReference<Context> mWeakReference;
+    private EditText mEditText;
+    private View mLocationView;
 
-    public IdentityCardPopupWindow(Context context) {
-        super(context);
-        initView(context);
+    public IdentityCardPopupWindow(Builder builder) {
+        this.mWeakReference = new WeakReference<>(builder.mContext);
+        this.mEditText = builder.editText;
+        this.mLocationView = builder.mView;
+        initView();
     }
 
-    public IdentityCardPopupWindow(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        initView(context);
-    }
+    private void initView() {
+        mPopupWindow = new PopupWindow(mWeakReference.get());
+        mPopView = LayoutInflater.from(mWeakReference.get()).inflate(R.layout.identity_keyboard_pop, null);
+        mPopupWindow.setContentView(mPopView);
 
-    private void initView(Context context) {
-        mPopView = LayoutInflater.from(context).inflate(R.layout.identity_keyboard_pop, null);
-        setContentView(mPopView);
-
-        setContentView(mPopView);
-        setTouchable(true);
+        mPopupWindow.setContentView(mPopView);
+        mPopupWindow.setTouchable(true);
         //设置焦点，是否点击外部会消失
-        setFocusable(true);
-        setBackgroundDrawable(new ColorDrawable());
-        setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setAnimationStyle(R.style.PopWindowstyle);
+        mPopupWindow.setFocusable(true);
+        mPopupWindow.setBackgroundDrawable(new ColorDrawable());
+        mPopupWindow.setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
+        mPopupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        mPopupWindow.setAnimationStyle(R.style.PopWindowstyle);
 
         mKeyView = mPopView.findViewById(R.id.identity_card_view);
 
-        //设置回调，并进行文本的插入与删除
-        mKeyView.setOnKeyPressListener(new IdentityCardKeyBordView.OnKeyPressListener() {
-            @Override
-            public void onInertKey(String text) {
-                if (mOnKeyPressListener != null){
-                    mOnKeyPressListener.onInertKey(text);
-                }
-            }
-
-            @Override
-            public void onDeleteKey() {
-                if (mOnKeyPressListener != null){
-                    mOnKeyPressListener.onDeleteKey();
-                }
-            }
-        });
+        //设置位置
+        showAtLocation(mEditText, mLocationView);
+        //设置显示内容
+        setListenerViewText(mEditText);
 
     }
 
@@ -82,7 +75,7 @@ public class IdentityCardPopupWindow extends PopupWindow {
 //                int inputType = mEditText.getInputType();
 //                mEditText.setInputType(InputType.TYPE_NULL);// 让系统键盘不弹出
                 //点击按钮显示键盘
-                showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                mPopupWindow.showAtLocation(view, Gravity.BOTTOM, 0, 0);
 
 //                mEditText.setInputType(inputType);
 //                //设定光标位置
@@ -95,33 +88,85 @@ public class IdentityCardPopupWindow extends PopupWindow {
     }
 
     /**
-     * 按键点击监听器
-     *
-     * @param li
+     *  设置监听变化的 EditText 试图
+     * @param editText
      */
-    public void setOnKeyPressListener(OnKeyPressListener li) {
-        mOnKeyPressListener = li;
-    }
+    public void setListenerViewText(final EditText editText){
+        //设置回调，并进行文本的插入与删除
+        mKeyView.setOnKeyPressListener(new IdentityCardKeyBordView.OnKeyPressListener() {
+            @Override
+            public void onInertKey(String text) {
+                int index = editText.getSelectionStart();
+                Log.i("---> index : ", index + "");
+                Editable editable = editText.getText();
+                editable.insert(index, text);
+            }
 
+            @Override
+            public void onDeleteKey() {
+                int last = editText.getText().length();
+                if (last > 0) {
+                    //删除最后一位
+                    int index = editText.getSelectionStart();
+                    Log.i("---> index : ", index + "");
+                    editText.getText().delete(index - 1, index);
+                }
+            }
+        });
+
+    }
 
     /**
-     * 回调接口
+     *  查看 PopupWindow 是否显示
+     * @return
      */
-    public interface OnKeyPressListener {
-        /**
-         * 添加数据回调
-         *
-         * @param text
-         */
-        void onInertKey(String text);
-
-        /**
-         * 删除数据回调
-         */
-        void onDeleteKey();
-
+    public boolean isShowing(){
+        return mPopupWindow.isShowing();
     }
 
+    /**
+     *  隐藏 PopupWindow
+     */
+    public void dismiss(){
+        mPopupWindow.dismiss();
+    }
+
+
+
+    public static class Builder{
+        private Context mContext;
+        private EditText editText;
+        private View mView;
+
+        public Builder(Context context) {
+            this.mContext = context;
+        }
+
+        /**
+         *  设置设置的 EditText 试图
+         * @param editText
+         * @return
+         */
+        public Builder setEditText(EditText editText){
+            this.editText = editText;
+            return this;
+        }
+
+        /**
+         *  设置显示位置的试图
+         * @param view
+         * @return
+         */
+        public Builder setLocationView(View view){
+            this.mView = view;
+            return this;
+        }
+
+        public IdentityCardPopupWindow create(){
+            return new IdentityCardPopupWindow(this);
+        }
+
+    }
 
 
 
