@@ -1,4 +1,4 @@
-package com.example.guojin.keyboarddemo;
+package com.example.guojin.keyboarddemo.computer;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -7,23 +7,35 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Rect;
 import android.graphics.Typeface;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
 import android.util.AttributeSet;
 import android.util.Log;
 
+import com.example.guojin.keyboarddemo.R;
+
 import java.util.List;
-import java.util.PropertyResourceBundle;
-
-public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
-    //用于区分左下角空白按键,(要与xml里设置的数值相同)
+/**
+ *
+ * @description
+ * @author puyantao
+ * @date 2019/10/14 11:44
+ */
+public class ComputerKeyBordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
+    /**
+     * 用于区分左下角空白按键,(要与xml里设置的数值相同)
+     */
     private int KEYCODE_EMPTY = -10;
-
-    private Drawable mDeleteKeyDrawable;   //删除按键背景图片
-    private int mKryboardBackgroud;
-    private Drawable mKryDrawable;   //按键背景
+    /**
+     * 删除按键背景图片
+     */
+    private Drawable mDeleteKeyDrawable;
+    private int mKeyboardBackground;
+    /**
+     * 按键背景
+     */
+    private Drawable mKryDrawable;
     private Drawable mKryClickDrawable;
     private int mKeySize;
     private int mPaddingLeft;
@@ -35,31 +47,33 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     private OnKeyPressListener mOnkeyPressListener;
 
-    public NumKeyView(Context context, AttributeSet attrs) {
+    public ComputerKeyBordView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
-    public NumKeyView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ComputerKeyBordView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.NumKeyView);
-        mKryDrawable = ta.getDrawable(R.styleable.NumKeyView_keyBackgBackground);
-        mKryClickDrawable = ta.getDrawable(R.styleable.NumKeyView_keyClickBackgBackground);
-        mDeleteKeyDrawable = ta.getDrawable(R.styleable.NumKeyView_deleteDrawable); //删除按键颜色
-        mKryboardBackgroud = ta.getColor(R.styleable.NumKeyView_keyboardBackgBackground, Color.WHITE); //keyboard背景颜色
-        mPaddingLeft = (int) ta.getDimension(R.styleable.NumKeyView_leftPadding, 1);
-        mPaddingRight = (int) ta.getDimension(R.styleable.NumKeyView_rightPadding, 1);
-        mPaddingTop = (int) ta.getDimension(R.styleable.NumKeyView_topPadding, 1);
-        mPaddingBottom = (int) ta.getDimension(R.styleable.NumKeyView_bottomPadding, 1);
-        mKeySize = (int) ta.getDimension(R.styleable.NumKeyView_keyTextSize, 15);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBordView);
+        mKryDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyBackgBackground);
+        mKryClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyClickBackgBackground);
+        //删除按键颜色
+        mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_deleteDrawable);
+        //keyboard背景颜色
+        mKeyboardBackground = ta.getColor(R.styleable.ComputerKeyBordView_keyboardBackgBackground, Color.WHITE);
+        mPaddingLeft = (int) ta.getDimension(R.styleable.ComputerKeyBordView_leftPadding, 1);
+        mPaddingRight = (int) ta.getDimension(R.styleable.ComputerKeyBordView_rightPadding, 1);
+        mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBordView_topPadding, 1);
+        mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBordView_bottomPadding, 1);
+        mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBordView_keyTextSize, 15);
         ta.recycle();
 
         //获取xml中的按键布局
-        Keyboard keyboard = new Keyboard(context, R.xml.numkeyview);
+        Keyboard keyboard = new Keyboard(context, R.xml.computer_numkey_view);
         setKeyboard(keyboard);
 
         setEnabled(true);
@@ -71,12 +85,14 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
     @Override
     public void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        canvas.drawColor(mKryboardBackgroud);
+        canvas.drawColor(mKeyboardBackground);
 
         drawKeyboardBorder(canvas);
 
         Keyboard keyboard = getKeyboard();
-        if (keyboard == null) return;
+        if (keyboard == null) {
+            return;
+        }
         List<Keyboard.Key> keys = keyboard.getKeys();
         if (keys != null && keys.size() > 0) {
 
@@ -266,7 +282,9 @@ public class NumKeyView extends KeyboardView implements KeyboardView.OnKeyboardA
 
     private void setKeyBackground(int i){
         Keyboard keyboard = getKeyboard();
-        if (keyboard == null) return;
+        if (keyboard == null) {
+            return;
+        }
         List<Keyboard.Key> keys = keyboard.getKeys();
         for (int j =0; j < keys.size(); j ++){
             Keyboard.Key key = keys.get(j);

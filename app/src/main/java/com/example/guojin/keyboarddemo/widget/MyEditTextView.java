@@ -1,5 +1,6 @@
-package com.example.guojin.keyboarddemo;
+package com.example.guojin.keyboarddemo.widget;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -7,7 +8,14 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.EditText;
+/**
+ *
+ * @description
+ * @author puyantao
+ * @date 2019/10/14 11:31
+ */
 
+@SuppressLint("AppCompatCustomView")
 public class MyEditTextView extends EditText {
     private int mLastPos = 0;
     private int mCurPos = 0;

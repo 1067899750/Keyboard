@@ -15,7 +15,7 @@
 
 
     //键盘属性
-    <declare-styleable name="NumKeyView">
+    <declare-styleable name="ComputerKeyBordView">
         <attr name="keyboardBackgBackground" format="color|reference"></attr>
         <attr name="keyBackgBackground" format="color|reference"></attr>
         <attr name="keyClickBackgBackground" format="color|reference"></attr>

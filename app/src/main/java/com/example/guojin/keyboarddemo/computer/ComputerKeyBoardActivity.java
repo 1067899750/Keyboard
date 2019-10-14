@@ -1,11 +1,11 @@
-package com.example.guojin.keyboarddemo;
+package com.example.guojin.keyboarddemo.computer;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
@@ -23,41 +23,20 @@ import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.example.guojin.keyboarddemo.R;
+
 import java.lang.reflect.Method;
 
 /**
  *
- *
- *   Description
- *   Author puyantao
- *   Email 1067899750@qq.com
- *   Date 2018-10-26 16:40
- *
- *
- *                        .::::.
- *                     .::::::::.
- *                    :::::::::::
- *                 ..:::::::::::'
- *               '::::::::::::'
- *                 .::::::::::
- *            '::::::::::::::..
- *               ..::::::::::::.
- *             ``::::::::::::::::  <- touch me
- *               ::::``:::::::::'        .:::.
- *             ::::'   ':::::'       .::::::::.
- *           .::::'      ::::     .:::::::'::::.
- *            .:::'       :::::  .:::::::::' ':::::.
- *          .::'        :::::.:::::::::'      ':::::.
- *         .::'         ::::::::::::::'         ``::::.
- *      ...:::           ::::::::::::'              ``::.
- *     ```` ':.          ':::::::::'                  ::::..
- *                        '.:::::'                    ':'````..
- *
-*/
+ * @description 计算器
+ * @author puyantao
+ * @date 2019/10/14 11:39
+ */
 public class ComputerKeyBoardActivity extends AppCompatActivity {
 
     private EditText mEditText;
-    private NumKeyView mKeyView;
+    private ComputerKeyBordView mKeyView;
     private LinearLayout mLinearlayout;
     private PopupWindow mPop;
     private View mPopView;
@@ -85,7 +64,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
 
         mPop = new PopupWindow();
-        mPopView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.keyboard_pop, null);
+        mPopView = LayoutInflater.from(getApplicationContext()).inflate(R.layout.computer_keyboard_pop, null);
         mPop.setContentView(mPopView);
         mPop.setTouchable(true);
         mPop.setFocusable(false); //设置焦点，是否点击外部会消失
@@ -171,7 +150,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
 
         //设置回调，并进行文本的插入与删除
-        mKeyView.setOnKeyPressListener(new NumKeyView.OnKeyPressListener() {
+        mKeyView.setOnKeyPressListener(new ComputerKeyBordView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
                 int index = mEditText.getSelectionStart();
