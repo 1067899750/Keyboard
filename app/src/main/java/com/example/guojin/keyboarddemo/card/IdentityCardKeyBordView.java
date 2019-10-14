@@ -216,7 +216,6 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
     }
 
 
-
     /**
      * 按键点击监听器
      *

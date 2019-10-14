@@ -200,13 +200,14 @@ public class ComputerKeyBordView extends KeyboardView implements KeyboardView.On
     private void drawKeyDelete(Keyboard.Key key, Canvas canvas) {
         int drawWidth = key.width;
         int drawHeight = key.height;
-        drawWidth = drawWidth / 2;
-        drawHeight = drawHeight / 2;
-        int widthInterval = (key.width - drawWidth) / 2;
-        int heightInterval = (key.height - drawHeight) / 2;
 
-        mDeleteKeyDrawable.setBounds(key.x + widthInterval, key.y + heightInterval,
-                key.x + widthInterval + drawWidth, key.y + heightInterval + drawHeight);
+        Bitmap bitmap = BitmapUtils.drawableToBitmap(mDeleteKeyDrawable);
+
+        mDeleteKeyDrawable.setBounds(key.x + drawWidth / 2 - bitmap.getWidth() / 2,
+                key.y + drawHeight / 2 - bitmap.getHeight() / 2,
+                key.x + drawWidth / 2 + bitmap.getWidth() / 2,
+                key.y + drawHeight / 2 + bitmap.getHeight() / 2);
+
         mDeleteKeyDrawable.draw(canvas);
 
     }
