@@ -168,7 +168,9 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
                     //删除最后一位
                     int index = mEditText.getSelectionStart();
                     Log.i("---> index : ", index + "");
-                    mEditText.getText().delete(index - 1, index);
+                    if (index > 0) {
+                        mEditText.getText().delete(index - 1, index);
+                    }
                 }
             }
 

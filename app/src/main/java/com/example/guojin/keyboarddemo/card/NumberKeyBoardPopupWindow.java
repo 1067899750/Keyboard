@@ -195,7 +195,9 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
                 if (last > 0) {
                     //删除最后一位
                     int index = editText.getSelectionStart();
-                    editText.getText().delete(index - 1, index);
+                    if (index > 0) {
+                        editText.getText().delete(index - 1, index);
+                    }
                 }
             }
         });
@@ -241,11 +243,12 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         }
 
         /**
-         *  输入数字的个数
+         * 输入数字的个数
+         *
          * @param count
          * @return
          */
-        public Builder setTextCount(int count){
+        public Builder setTextCount(int count) {
             this.buildTextCount = count;
             return this;
         }
