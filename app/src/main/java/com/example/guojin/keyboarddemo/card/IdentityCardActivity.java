@@ -7,7 +7,7 @@ import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.guojin.keyboarddemo.R;
@@ -19,14 +19,13 @@ import com.example.guojin.keyboarddemo.R;
  */
 public class IdentityCardActivity extends AppCompatActivity {
     private EditText mEditText;
-    private LinearLayout mLinearLayout;
+    private RelativeLayout mLinearLayout;
     private NumberKeyBoardPopupWindow mNumberKeyBoardPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identity_card);
-        getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
         mEditText = findViewById(R.id.et);
 

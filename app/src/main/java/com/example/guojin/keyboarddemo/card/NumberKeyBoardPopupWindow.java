@@ -3,7 +3,9 @@ package com.example.guojin.keyboarddemo.card;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
+import android.support.v4.view.ViewConfigurationCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -11,12 +13,15 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -45,13 +50,13 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
      */
     private float eventY;
 
-
     public NumberKeyBoardPopupWindow(Builder builder) {
         this(builder.buildContext);
         this.mWeakReference = new WeakReference<>(builder.buildContext);
         this.mEditText = builder.buildEditText;
         this.mLocationView = builder.buildView;
         this.mTextCount = builder.buildTextCount;
+;
         initView();
     }
 
@@ -62,9 +67,6 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
     private void initView() {
         mPopView = LayoutInflater.from(mWeakReference.get()).inflate(R.layout.identity_keyboard_pop, null);
         setContentView(mPopView);
-
-        setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
-        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         setTouchable(true);
         //设置焦点，是否点击外部会消失
@@ -78,6 +80,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
 
         //设置限制输入个数
         mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
+
 
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
         if (android.os.Build.VERSION.SDK_INT <= 10) {
@@ -114,11 +117,13 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         });
 
         //设置位置
-        showAtLocation(mEditText, mLocationView);
+        showAtLocation();
         //设置显示内容
         setListenerViewText(mEditText);
 
+
     }
+
 
     /**
      * 强制转换Activity
@@ -153,27 +158,27 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
     /**
      * 设置位置
      *
-     * @param editText
-     * @param view
      */
-    public void showAtLocation(EditText editText, final View view) {
-        editText.setOnTouchListener(new View.OnTouchListener() {
+    public void showAtLocation() {
+        mEditText.setOnTouchListener(new View.OnTouchListener() {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                int inputType = mEditText.getInputType();
-//                mEditText.setInputType(InputType.TYPE_NULL);// 让系统键盘不弹出
                 //点击按钮显示键盘
-                showAtLocation(view, Gravity.BOTTOM, 0, 0);
-
-//                mEditText.setInputType(inputType);
-//                //设定光标位置
-////                Selection.setSelection(mEditText.getText(), mEditText.getText().length());
-//                mEditText.setSelection(mEditText.getText().length());
+                showAtLocation(mLocationView, Gravity.BOTTOM, 0, 0);
                 return false;
             }
         });
 
+    }
+
+
+    /**
+     *  获取键盘试图
+     * @return
+     */
+    public NumberKeyBordView getKeyView() {
+        return mKeyView;
     }
 
     /**
