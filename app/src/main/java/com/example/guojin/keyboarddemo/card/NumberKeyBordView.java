@@ -37,7 +37,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      */
     public static final int CARD_TYPE = 1;
     /**
-     * 用于区分左下角空白按键,(要与xml里设置的数值相同)
+     * 用于区分左下角空白按键(暂时不用)
      */
     private int KEYCODE_EMPTY = -10;
 
@@ -258,7 +258,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             //删除数据回调
             mOnKeyPressListener.onDeleteKey();
 
-        } else if (i != KEYCODE_EMPTY) {
+        } else  {
             //添加数据回调
             mOnKeyPressListener.onInertKey(Character.toString((char) i));
         }
