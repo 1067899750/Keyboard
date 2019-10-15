@@ -45,24 +45,6 @@ public class IdentityCardActivity extends AppCompatActivity {
 
         mLinearLayout = findViewById(R.id.ln);
 
-        //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
-        if (android.os.Build.VERSION.SDK_INT <= 10) {
-            mEditText.setInputType(InputType.TYPE_NULL);
-        } else {
-            getWindow().setSoftInputMode(
-                    WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-            try {
-                Class<EditText> cls = EditText.class;
-                Method setShowSoftInputOnFocus;
-                setShowSoftInputOnFocus = cls.getMethod(
-                        "setShowSoftInputOnFocus", boolean.class);
-                setShowSoftInputOnFocus.setAccessible(true);
-                setShowSoftInputOnFocus.invoke(mEditText, false);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-
         mIdentityCardPopupWindow = new IdentityCardPopupWindow.Builder(this)
                 .setLocationView(mLinearLayout)
                 .setEditText(mEditText)
