@@ -9,6 +9,7 @@ import android.view.KeyEvent;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.guojin.keyboarddemo.R;
@@ -50,18 +51,16 @@ public class IdentityCardActivity extends AppCompatActivity {
         mEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                Log.i("---> : ", "beforeTextChanged");
+
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Log.i("---> : ", "onTextChanged" + start + ":" + before + ":" + count);
 
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                Log.i("---> : ", "afterTextChanged");
 
             }
         });

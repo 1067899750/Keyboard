@@ -63,7 +63,9 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         mPopView = LayoutInflater.from(mWeakReference.get()).inflate(R.layout.identity_keyboard_pop, null);
         setContentView(mPopView);
 
-        setContentView(mPopView);
+        setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+
         setTouchable(true);
         //设置焦点，是否点击外部会消失
         setFocusable(true);

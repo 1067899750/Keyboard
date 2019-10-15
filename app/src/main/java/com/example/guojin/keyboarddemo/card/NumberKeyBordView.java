@@ -260,7 +260,9 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
 
         } else  {
             //添加数据回调
-            mOnKeyPressListener.onInertKey(Character.toString((char) i));
+            if (mOnKeyPressListener != null) {
+                mOnKeyPressListener.onInertKey(Character.toString((char) i));
+            }
         }
     }
 

@@ -106,6 +106,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
         mEditText.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
 //                int inputType = mEditText.getInputType();
 //                mEditText.setInputType(InputType.TYPE_NULL);// 让系统键盘不弹出
