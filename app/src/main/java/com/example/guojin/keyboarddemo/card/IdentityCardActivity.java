@@ -1,29 +1,17 @@
 package com.example.guojin.keyboarddemo.card;
 
-import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
-import android.view.View;
-import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.guojin.keyboarddemo.R;
-import com.example.guojin.keyboarddemo.computer.ComputerKeyBordView;
-
-import java.lang.reflect.Method;
 
 /**
  * @author puyantao
@@ -33,7 +21,7 @@ import java.lang.reflect.Method;
 public class IdentityCardActivity extends AppCompatActivity {
     private EditText mEditText;
     private LinearLayout mLinearLayout;
-    private IdentityCardPopupWindow mIdentityCardPopupWindow;
+    private NumberKeyBoardPopupWindow mNumberKeyBoardPopupWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +33,10 @@ public class IdentityCardActivity extends AppCompatActivity {
 
         mLinearLayout = findViewById(R.id.ln);
 
-        mIdentityCardPopupWindow = new IdentityCardPopupWindow.Builder(this)
+        mNumberKeyBoardPopupWindow = new NumberKeyBoardPopupWindow.Builder(this)
                 .setLocationView(mLinearLayout)
-                .setEditText(mEditText)
+                .setBuildEditText(mEditText)
+                .setTextCount(18)
                 .create();
 
         //输入结束点击键盘确认键执行的 方法
@@ -83,8 +72,8 @@ public class IdentityCardActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if (mIdentityCardPopupWindow.isShowing()) {
-            mIdentityCardPopupWindow.dismiss();
+        if (mNumberKeyBoardPopupWindow.isShowing()) {
+            mNumberKeyBoardPopupWindow.dismiss();
         } else {
             super.onBackPressed();
         }

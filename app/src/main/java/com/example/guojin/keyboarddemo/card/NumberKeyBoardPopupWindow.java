@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.drawable.ColorDrawable;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,12 +26,16 @@ import java.lang.reflect.Method;
  * @describe 身份证键盘 PopupWindow
  * @create 2019/10/14 15:15
  */
-public class IdentityCardPopupWindow extends PopupWindow {
+public class NumberKeyBoardPopupWindow extends PopupWindow {
     private View mPopView;
-    private IdentityCardKeyBordView mKeyView;
+    private NumberKeyBordView mKeyView;
     private WeakReference<Context> mWeakReference;
     private EditText mEditText;
     private View mLocationView;
+    /**
+     * 允许输入数字的个数
+     */
+    private int mTextCount;
     /**
      * 触摸 X 的位置
      */
@@ -41,15 +46,16 @@ public class IdentityCardPopupWindow extends PopupWindow {
     private float eventY;
 
 
-    public IdentityCardPopupWindow(Builder builder) {
-        this(builder.mContext);
-        this.mWeakReference = new WeakReference<>(builder.mContext);
-        this.mEditText = builder.editText;
-        this.mLocationView = builder.mView;
+    public NumberKeyBoardPopupWindow(Builder builder) {
+        this(builder.buildContext);
+        this.mWeakReference = new WeakReference<>(builder.buildContext);
+        this.mEditText = builder.buildEditText;
+        this.mLocationView = builder.buildView;
+        this.mTextCount = builder.buildTextCount;
         initView();
     }
 
-    public IdentityCardPopupWindow(Context context) {
+    public NumberKeyBoardPopupWindow(Context context) {
         super(context);
     }
 
@@ -67,6 +73,9 @@ public class IdentityCardPopupWindow extends PopupWindow {
         setAnimationStyle(R.style.PopWindowstyle);
 
         mKeyView = mPopView.findViewById(R.id.identity_card_view);
+
+        //设置限制输入个数
+        mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
 
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
         if (android.os.Build.VERSION.SDK_INT <= 10) {
@@ -90,14 +99,14 @@ public class IdentityCardPopupWindow extends PopupWindow {
         setTouchInterceptor(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-//                eventX = event.getRawX();
-//                eventY = event.getRawY();
-//                int[] location = getLocation(mEditText);
-//                if (location[0] < eventX && eventX < location[0] + mEditText.getRight()
-//                        && location[1] < eventY && eventY < location[1] + mEditText.getBottom()) {
-//                    mEditText.requestFocus();
-//                    return true;
-//                }
+                eventX = event.getRawX();
+                eventY = event.getRawY();
+                int[] location = getLocation(mEditText);
+                if (location[0] < eventX && eventX < location[0] + mEditText.getRight()
+                        && location[1] < eventY && eventY < location[1] + mEditText.getBottom()) {
+                    mEditText.requestFocus();
+                    return false;
+                }
                 return false;
             }
         });
@@ -172,7 +181,7 @@ public class IdentityCardPopupWindow extends PopupWindow {
      */
     public void setListenerViewText(final EditText editText) {
         //设置回调，并进行文本的插入与删除
-        mKeyView.setOnKeyPressListener(new IdentityCardKeyBordView.OnKeyPressListener() {
+        mKeyView.setOnKeyPressListener(new NumberKeyBordView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
                 int index = editText.getSelectionStart();
@@ -200,22 +209,23 @@ public class IdentityCardPopupWindow extends PopupWindow {
     }
 
     public static class Builder {
-        private Context mContext;
-        private EditText editText;
-        private View mView;
+        private Context buildContext;
+        private EditText buildEditText;
+        private View buildView;
+        private int buildTextCount;
 
         public Builder(Context context) {
-            this.mContext = context;
+            this.buildContext = context;
         }
 
         /**
          * 设置设置的 EditText 试图
          *
-         * @param editText
+         * @param buildEditText
          * @return
          */
-        public Builder setEditText(EditText editText) {
-            this.editText = editText;
+        public Builder setBuildEditText(EditText buildEditText) {
+            this.buildEditText = buildEditText;
             return this;
         }
 
@@ -226,12 +236,22 @@ public class IdentityCardPopupWindow extends PopupWindow {
          * @return
          */
         public Builder setLocationView(View view) {
-            this.mView = view;
+            this.buildView = view;
             return this;
         }
 
-        public IdentityCardPopupWindow create() {
-            return new IdentityCardPopupWindow(this);
+        /**
+         *  输入数字的个数
+         * @param count
+         * @return
+         */
+        public Builder setTextCount(int count){
+            this.buildTextCount = count;
+            return this;
+        }
+
+        public NumberKeyBoardPopupWindow create() {
+            return new NumberKeyBoardPopupWindow(this);
         }
 
     }

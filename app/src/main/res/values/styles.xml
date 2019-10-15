@@ -14,19 +14,22 @@
     </style>
 
 
-    //键盘属性
+   <!-- 键盘属性-->
     <declare-styleable name="ComputerKeyBordView">
-        <attr name="keyboardBackgBackground" format="color|reference"></attr>
-        <attr name="keyBackgBackground" format="color|reference"></attr>
-        <attr name="keyClickBackgBackground" format="color|reference"></attr>
-        <attr name="deleteDrawable" format="reference"></attr>
-        <attr name="keyTextSize" format="dimension"></attr>
-        <attr name="leftPadding" format="dimension"></attr>
-        <attr name="rightPadding" format="dimension"></attr>
-        <attr name="topPadding" format="dimension"></attr>
-        <attr name="bottomPadding" format="dimension"></attr>
+        <attr name="keyboardBackgBackground" format="color|reference" />
+        <attr name="keyBackgBackground" format="color|reference" />
+        <attr name="keyClickBackgBackground" format="color|reference" />
+        <attr name="deleteDrawable" format="reference" />
+        <attr name="keyTextSize" format="dimension" />
+        <attr name="leftPadding" format="dimension" />
+        <attr name="rightPadding" format="dimension" />
+        <attr name="topPadding" format="dimension" />
+        <attr name="bottomPadding" format="dimension" />
+        <attr name="keyboardType" format="string">
+            <enum name="phone" value="0" />
+            <enum name="card" value="1" />
+        </attr>
     </declare-styleable>
-
 
 
 </resources>

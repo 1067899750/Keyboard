@@ -27,16 +27,33 @@ import java.util.List;
  * @describe
  * @create 2019/10/14 13:37
  */
-public class IdentityCardKeyBordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
+public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
+    /**
+     *  电话类型
+     */
+    public static final int PHONE_TYPE = 0;
+    /**
+     *  身份证类型
+     */
+    public static final int CARD_TYPE = 1;
     /**
      * 用于区分左下角空白按键,(要与xml里设置的数值相同)
      */
     private int KEYCODE_EMPTY = -10;
+
+    /**
+     *  控制显示不同的数字（暂时不用）
+     */
+    private int KEY_NUMBER_TYPE = -11;
     /**
      * 删除按键背景图片
      */
     private Drawable mDeleteKeyDrawable;
     private int mKeyboardBackground;
+    /**
+     *  加载键盘的类型
+     */
+    private int keyboardType;
     /**
      * 按键背景
      */
@@ -52,12 +69,12 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
 
     private OnKeyPressListener mOnKeyPressListener;
 
-    public IdentityCardKeyBordView(Context context, AttributeSet attrs) {
+    public NumberKeyBordView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
-    public IdentityCardKeyBordView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NumberKeyBordView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
@@ -76,11 +93,17 @@ public class IdentityCardKeyBordView extends KeyboardView implements KeyboardVie
         mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBordView_topPadding, 1);
         mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBordView_bottomPadding, 1);
         mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBordView_keyTextSize, 15);
+        keyboardType = ta.getInt(R.styleable.ComputerKeyBordView_keyboardType, -1);
         ta.recycle();
 
         //获取xml中的按键布局
-        Keyboard keyboard = new Keyboard(context, R.xml.identity_card_numkey_view);
-        setKeyboard(keyboard);
+        if (keyboardType == PHONE_TYPE){
+            Keyboard keyboard = new Keyboard(context, R.xml.identity_card_numkey_view);
+            setKeyboard(keyboard);
+        } else if (keyboardType == CARD_TYPE){
+            Keyboard keyboard = new Keyboard(context, R.xml.phone_numkey_view);
+            setKeyboard(keyboard);
+        }
 
         setEnabled(true);
         setPreviewEnabled(false);

@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="#D1D5DB">
 
-        <com.example.guojin.keyboarddemo.card.IdentityCardKeyBordView
+        <com.example.guojin.keyboarddemo.card.NumberKeyBordView
             android:id="@+id/identity_card_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -25,6 +25,7 @@
             app:deleteDrawable="@drawable/identity_card_delete"
             app:keyBackgBackground="@drawable/key_bg_view"
             app:keyClickBackgBackground="@drawable/key_click_bg_view"
+            app:keyboardType="card"
             app:keyboardBackgBackground="@color/cCDCDCD" />
     </LinearLayout>
 
