@@ -256,7 +256,6 @@ public class NumberKeyBoard {
     /**
      * 显示试图
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void showKeyboard() {
         setKeyBoardHeight();
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.showanim);
