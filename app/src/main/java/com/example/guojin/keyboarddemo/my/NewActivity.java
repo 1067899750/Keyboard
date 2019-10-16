@@ -2,14 +2,13 @@ package com.example.guojin.keyboarddemo.my;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.example.guojin.keyboarddemo.R;
 import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
 
 public class NewActivity extends AppCompatActivity {
-    private EditText mEditText;
+    private KeyEditText mEditText;
     private NumberKeyBoard mNumberKeyBoard;
     private RelativeLayout mRelativeLayout;
 

@@ -1,12 +1,15 @@
 package com.example.guojin.keyboarddemo.my;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.inputmethodservice.KeyboardView;
+import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,10 +21,12 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.guojin.keyboarddemo.R;
 import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
+import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.reflect.Method;
 
@@ -82,7 +87,6 @@ public class NumberKeyBoard {
             Log.e("mMyKeyboardView", "mMyKeyboardView init failed!");
         }
 
-
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
         if (android.os.Build.VERSION.SDK_INT <= 10) {
             mEditText.setInputType(InputType.TYPE_NULL);
@@ -106,7 +110,7 @@ public class NumberKeyBoard {
             mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
         }
 
-        if (mKeyBoardType != 0){
+        if (mKeyBoardType != 0) {
             mMyKeyboardView.setKeyboardType(mKeyBoardType);
         }
 
@@ -137,6 +141,9 @@ public class NumberKeyBoard {
         mEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                if ( KeyBoardUtils.isSoftShowing(scanForActivity(mContext))){
+                    KeyBoardUtils.hideSoftKeyboard(scanForActivity(mContext), mEditText);
+                }
                 //点击按钮显示键盘
                 if (!isShowKeyboard()) {
                     showKeyboard();
@@ -145,10 +152,36 @@ public class NumberKeyBoard {
             }
         });
 
+        //点击其他子视图消失
+        for (int i = 0; i < mParent.getChildCount(); i++) {
+            if (!(mParent.getChildAt(i) instanceof KeyEditText)) {
+                if (mParent.getChildAt(i) instanceof EditText){
+                    mParent.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
+                        @Override
+                        public boolean onTouch(View v, MotionEvent event) {
+                            //点击按钮显示键盘
+                            if (isShowKeyboard()) {
+                                hideKeyboard();
+                            }
+                            return false;
+                        }
+                    });
+                }
+                mParent.getChildAt(i).setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (isShowKeyboard()) {
+                            hideKeyboard();
+                        }
+                    }
+                });
+            }
+        }
+
         mParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isShowKeyboard() && mFocusable) {
+                if (isShowKeyboard()) {
                     hideKeyboard();
                 }
             }
@@ -178,9 +211,9 @@ public class NumberKeyBoard {
 
     }
 
-
     /**
-     *  判断键盘是否显示
+     * 判断键盘是否显示
+     *
      * @return
      */
     public boolean isShowKeyboard() {

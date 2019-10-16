@@ -6,13 +6,25 @@
     android:layout_height="match_parent"
     tools:context=".my.NewActivity">
 
-    <EditText
+    <com.example.guojin.keyboarddemo.my.KeyEditText
         android:id="@+id/et_news"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textAllCaps="false" />
 
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/et_news"
+        android:layout_marginTop="50dp"
+        android:textAllCaps="false" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginTop="200dp"/>
 
 </RelativeLayout>
 

@@ -1,9 +1,13 @@
 package com.example.guojin.keyboarddemo.utils;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Rect;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 
 public class KeyBoardUtils {
 
@@ -40,6 +44,24 @@ public class KeyBoardUtils {
         rect.set(0, 0, rect.width(), decHeight);
         decorView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, rect.height()));
     }
+
+
+    /**
+     * 隐藏软键盘(有输入框)
+     *
+     * @param activity
+     * @param mEditText
+     */
+    public static void hideSoftKeyboard(@NonNull Activity activity, @NonNull EditText mEditText) {
+        View view = activity.getWindow().peekDecorView();
+        if (view != null) {
+            InputMethodManager inputmanger = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            inputmanger.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+
+
 
 }
 
