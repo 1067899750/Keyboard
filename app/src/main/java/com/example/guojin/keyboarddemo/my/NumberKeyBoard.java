@@ -15,6 +15,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
 
 import com.example.guojin.keyboarddemo.R;
@@ -33,14 +36,20 @@ public class NumberKeyBoard {
     private EditText mEditText;
     private View mKeyView;
     private ViewGroup mParent;
+    private Window mWindow;
     /**
      * 允许输入数字的个数
      */
     private int mTextCount;
     /**
-     *  键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE} （待接入）
+     * 键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
      */
     private int mKeyBoardType;
+
+    /**
+     * 设置焦点，是否点击外部会消失
+     */
+    private boolean mFocusable = false;
 
     public NumberKeyBoard(Builder builder) {
         this.mContext = builder.buildContext;
@@ -48,6 +57,7 @@ public class NumberKeyBoard {
         this.mParent = builder.buildViewGroup;
         this.mTextCount = builder.buildTextCount;
         this.mKeyBoardType = builder.buildKeyBoardType;
+        this.mFocusable = builder.buildFocusable;
         initView();
         setListenerViewText();
 
@@ -60,12 +70,10 @@ public class NumberKeyBoard {
         mKeyView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
 
         //把键盘添加到 window 上
-        Window window = scanForActivity(mContext).getWindow();
-        window.addContentView(mKeyView, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+        mWindow = scanForActivity(mContext).getWindow();
+        mWindow.setGravity(Gravity.BOTTOM);
+        mWindow.addContentView(mKeyView, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        window.setGravity(Gravity.BOTTOM);
-        window.setWindowAnimations(R.style.PopWindowstyle);
-
         try {
             mMyKeyboardView = mKeyView.findViewById(R.id.keyboard_view);
             mMyKeyboardView.setEnabled(true);
@@ -98,6 +106,10 @@ public class NumberKeyBoard {
             mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
         }
 
+        if (mKeyBoardType != 0){
+            mMyKeyboardView.setKeyboardType(mKeyBoardType);
+        }
+
     }
 
 
@@ -120,14 +132,15 @@ public class NumberKeyBoard {
 
     /**
      * 设置监听变化的 EditText 试图
-     *
      */
     public void setListenerViewText() {
         mEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //点击按钮显示键盘
-                showKeyboard();
+                if (!isShowKeyboard()) {
+                    showKeyboard();
+                }
                 return false;
             }
         });
@@ -135,7 +148,9 @@ public class NumberKeyBoard {
         mParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                hideKeyboard();
+                if (isShowKeyboard() && mFocusable) {
+                    hideKeyboard();
+                }
             }
         });
 
@@ -164,8 +179,12 @@ public class NumberKeyBoard {
     }
 
 
-    public boolean isShowKeyboard(){
-        if (mKeyView.getVisibility() == View.VISIBLE){
+    /**
+     *  判断键盘是否显示
+     * @return
+     */
+    public boolean isShowKeyboard() {
+        if (mKeyView.getVisibility() == View.VISIBLE) {
             return true;
         } else {
             return false;
@@ -173,60 +192,61 @@ public class NumberKeyBoard {
     }
 
     /**
-     *  显示试图
+     * 显示试图
      */
     public void showKeyboard() {
-//        Animation animation =  AnimationUtils.loadAnimation(mContext, R.anim.showanim);
-//        LayoutAnimationController controller = new LayoutAnimationController(animation);
-//        controller.setDelay(0.5f);
-//        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
-//        mKeyView.startAnimation(animation);
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.showanim);
+        LayoutAnimationController controller = new LayoutAnimationController(animation);
+        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+        mKeyView.startAnimation(animation);
         mKeyView.setVisibility(View.VISIBLE);
     }
 
     /**
-     *  隐藏试图
+     * 隐藏试图
      */
     public void hideKeyboard() {
-//        Animation animation =  AnimationUtils.loadAnimation(mContext, R.anim.dismissanim);
-//        LayoutAnimationController controller = new LayoutAnimationController(animation);
-//        controller.setDelay(0.5f);
-//        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
-//        mKeyView.startAnimation(animation);
+        Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.dismissanim);
+        LayoutAnimationController controller = new LayoutAnimationController(animation);
+        controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
+        mKeyView.startAnimation(animation);
         mKeyView.setVisibility(View.GONE);
     }
 
 
-    public static class Builder{
+    public static class Builder {
         private Context buildContext;
         private EditText buildEditText;
         private ViewGroup buildViewGroup;
         private int buildTextCount;
         /**
-         *  键盘类型
+         * 键盘类型
          */
         private int buildKeyBoardType;
+        private boolean buildFocusable;
 
         public Builder(Context context) {
             this.buildContext = context;
         }
 
         /**
-         *  设置编辑试图
+         * 设置编辑试图
+         *
          * @param editText
          * @return
          */
-        public Builder setEditText(EditText editText){
+        public Builder setEditText(EditText editText) {
             this.buildEditText = editText;
             return this;
         }
 
         /**
-         *  设置根试图
+         * 设置根试图, 用于点击取消键盘和{@link #buildFocusable} 连用
+         *
          * @param viewGroup
          * @return
          */
-        public Builder setViewGroup(ViewGroup viewGroup){
+        public Builder setViewGroup(ViewGroup viewGroup) {
             this.buildViewGroup = viewGroup;
             return this;
         }
@@ -238,25 +258,38 @@ public class NumberKeyBoard {
          * @param count
          * @return
          */
-        public Builder setTextCount(int count) {
+        public Builder setTextLength(int count) {
             this.buildTextCount = count;
             return this;
         }
 
         /**
-         *  设置键盘类型
+         * 设置键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+         *
          * @return
          */
-        public Builder setKeyBoardType(int type){
+        public Builder setKeyBoardType(@NumberKeyBordView.KeyBoardType int type) {
             this.buildKeyBoardType = type;
             return this;
         }
 
         /**
-         *  构建 {@link NumberKeyBoard}
+         * 设置焦点，是否点击外部会消失
+         *
+         * @param focusable true if the popup should grab focus, false otherwise.
          * @return
          */
-        public NumberKeyBoard Build(){
+        public Builder setFocusable(boolean focusable) {
+            this.buildFocusable = focusable;
+            return this;
+        }
+
+        /**
+         * 构建 {@link NumberKeyBoard}
+         *
+         * @return
+         */
+        public NumberKeyBoard Build() {
             return new NumberKeyBoard(this);
         }
 

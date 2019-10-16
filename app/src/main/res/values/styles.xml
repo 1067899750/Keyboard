@@ -26,8 +26,8 @@
         <attr name="topPadding" format="dimension" />
         <attr name="bottomPadding" format="dimension" />
         <attr name="keyboardType" format="string">
-            <enum name="phone" value="0" />
-            <enum name="card" value="1" />
+            <enum name="phone" value="10" />
+            <enum name="card" value="11" />
         </attr>
     </declare-styleable>
 

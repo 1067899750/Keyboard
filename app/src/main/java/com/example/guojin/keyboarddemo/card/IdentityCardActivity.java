@@ -35,6 +35,7 @@ public class IdentityCardActivity extends AppCompatActivity {
                 .setLocationView(mLinearLayout)
                 .setBuildEditText(mEditText)
                 .setTextCount(18)
+                .setKeyBoardType(NumberKeyBordView.PHONE_TYPE)
                 .create();
 
         //输入结束点击键盘确认键执行的 方法

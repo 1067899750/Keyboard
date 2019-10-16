@@ -49,7 +49,7 @@
 
     <Row>
         <Key
-            android:codes="88"
+            android:codes="-11"
             android:keyLabel="X"/>
 
         <Key

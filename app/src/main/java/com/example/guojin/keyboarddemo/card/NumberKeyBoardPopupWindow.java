@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.my.NumberKeyBoard;
 import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.ref.WeakReference;
@@ -49,6 +50,10 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
      * 触摸 Y 的位置
      */
     private float eventY;
+    /**
+     * 键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+     */
+    private int mKeyBoardType;
 
     public NumberKeyBoardPopupWindow(Builder builder) {
         this(builder.buildContext);
@@ -56,6 +61,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         this.mEditText = builder.buildEditText;
         this.mLocationView = builder.buildView;
         this.mTextCount = builder.buildTextCount;
+        this.mKeyBoardType = builder.buildKeyBoardType;
         initView();
     }
 
@@ -78,7 +84,13 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         mKeyView = mPopView.findViewById(R.id.identity_card_view);
 
         //设置限制输入个数
-        mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
+        if (mTextCount != 0) {
+            mEditText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(mTextCount)});
+        }
+
+        if (mKeyBoardType != 0){
+            mKeyView.setKeyboardType(mKeyBoardType);
+        }
 
 
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
@@ -219,6 +231,10 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         private EditText buildEditText;
         private View buildView;
         private int buildTextCount;
+        /**
+         * 键盘类型
+         */
+        private int buildKeyBoardType;
 
         public Builder(Context context) {
             this.buildContext = context;
@@ -256,6 +272,17 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
             this.buildTextCount = count;
             return this;
         }
+
+        /**
+         * 设置键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+         *
+         * @return
+         */
+        public Builder setKeyBoardType(@NumberKeyBordView.KeyBoardType int type) {
+            this.buildKeyBoardType = type;
+            return this;
+        }
+
 
         public NumberKeyBoardPopupWindow create() {
             return new NumberKeyBoardPopupWindow(this);

@@ -11,6 +11,7 @@ import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.inputmethodservice.Keyboard;
 import android.inputmethodservice.KeyboardView;
+import android.support.annotation.IntDef;
 import android.util.AttributeSet;
 import android.util.Log;
 
@@ -18,6 +19,8 @@ import com.example.guojin.keyboarddemo.R;
 import com.example.guojin.keyboarddemo.utils.BitmapUtils;
 
 
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
 import java.util.List;
 
 /**
@@ -27,20 +30,27 @@ import java.util.List;
  */
 public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
     /**
-     *  电话类型
+     * 电话类型
      */
-    public static final int PHONE_TYPE = 0;
+    public static final int PHONE_TYPE = 10;
     /**
-     *  身份证类型
+     * 身份证类型
      */
-    public static final int CARD_TYPE = 1;
+    public static final int CARD_TYPE = 11;
+
+    @IntDef({PHONE_TYPE, CARD_TYPE})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface KeyBoardType {
+
+    }
+
     /**
      * 用于区分左下角空白按键(暂时不用)
      */
     private int KEYCODE_EMPTY = -10;
 
     /**
-     *  控制显示不同的数字（暂时不用）
+     * 控制显示不同的数字
      */
     private int KEY_NUMBER_TYPE = -11;
     /**
@@ -49,7 +59,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     private Drawable mDeleteKeyDrawable;
     private int mKeyboardBackground;
     /**
-     *  加载键盘的类型
+     * 加载键盘的类型
      */
     private int keyboardType = -1;
     /**
@@ -66,6 +76,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     private boolean isClick = false;
 
     private OnKeyPressListener mOnKeyPressListener;
+
 
     public NumberKeyBordView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -95,13 +106,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         ta.recycle();
 
         //获取xml中的按键布局
-        if (keyboardType == PHONE_TYPE){
-            Keyboard keyboard = new Keyboard(context, R.xml.identity_card_numkey_view);
-            setKeyboard(keyboard);
-        } else if (keyboardType == CARD_TYPE){
-            Keyboard keyboard = new Keyboard(context, R.xml.phone_numkey_view);
-            setKeyboard(keyboard);
-        }
+        Keyboard keyboard = new Keyboard(context, R.xml.num_key_borad_view);
+        setKeyboard(keyboard);
 
         setEnabled(true);
         setPreviewEnabled(false);
@@ -194,10 +200,21 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             int baseline = (rect.bottom + rect.top - fontMetrics.bottom - fontMetrics.top) / 2;
             // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
             paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(key.label.toString(), rect.centerX(), baseline, paint);
+            if (key.codes[0] == KEY_NUMBER_TYPE) {
+                if (keyboardType == PHONE_TYPE) {
+                    canvas.drawText("-", rect.centerX(), baseline, paint);
+
+                } else if (keyboardType == CARD_TYPE) {
+                    canvas.drawText("X", rect.centerX(), baseline, paint);
+
+                }
+            } else {
+                canvas.drawText(key.label.toString(), rect.centerX(), baseline, paint);
+            }
         }
 
     }
+
 
     /**
      * 绘制删除按键
@@ -238,6 +255,16 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
 
 
     /**
+     * 设置键盘类型
+     *
+     * @param type
+     */
+    public void setKeyboardType(@KeyBoardType int type) {
+        this.keyboardType = type;
+        invalidate();
+    }
+
+    /**
      * 按键点击监听器
      *
      * @param li
@@ -256,7 +283,15 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             //删除数据回调
             mOnKeyPressListener.onDeleteKey();
 
-        } else  {
+        } else if (i == KEY_NUMBER_TYPE && mOnKeyPressListener != null) {
+            if (keyboardType == PHONE_TYPE) {
+                mOnKeyPressListener.onInertKey("-");
+
+            } else if (keyboardType == CARD_TYPE) {
+                mOnKeyPressListener.onInertKey("X");
+
+            }
+        } else {
             //添加数据回调
             if (mOnKeyPressListener != null) {
                 mOnKeyPressListener.onInertKey(Character.toString((char) i));

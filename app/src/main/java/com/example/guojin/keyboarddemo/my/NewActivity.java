@@ -2,11 +2,11 @@ package com.example.guojin.keyboarddemo.my;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
 
 public class NewActivity extends AppCompatActivity {
     private EditText mEditText;
@@ -24,7 +24,9 @@ public class NewActivity extends AppCompatActivity {
         mNumberKeyBoard = new NumberKeyBoard.Builder(this)
                 .setEditText(mEditText)
                 .setViewGroup(mRelativeLayout)
-                .setTextCount(18)
+                .setKeyBoardType(NumberKeyBordView.PHONE_TYPE)
+                .setTextLength(18)
+                .setFocusable(true)
                 .Build();
 
 
