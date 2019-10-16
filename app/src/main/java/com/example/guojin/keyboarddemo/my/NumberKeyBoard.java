@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.Animation;
@@ -217,26 +218,33 @@ public class NumberKeyBoard {
      */
     private void setKeyBoardHeight() {
         int height = mEditText.getHeight();
-        int heightEd = mEditText.getBottom();
+        final int heightEd = mEditText.getBottom();
 
         DisplayMetrics outMetrics = new DisplayMetrics();
         scanForActivity(mContext).getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
-        int heightPixels = outMetrics.heightPixels;
+        final int heightPixels = outMetrics.heightPixels;
 
         int navigatorHeight = 0;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
             navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
         }
 
-        int keyHeight = mKeyboardRl.getMeasuredHeight();
-        if (keyHeight == 0) {
-            keyHeight = heightPixels / 3;
-        }
-        if (heightPixels - heightEd - navigatorHeight < keyHeight) {
-            int scrollY = keyHeight - (heightPixels - heightEd - navigatorHeight - mEditText.getHeight());
-            mParent.setTranslationY(-scrollY);
-            isTranslation = true;
-        }
+        final int finalNavigatorHeight = navigatorHeight;
+        mKeyboardRl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+            @Override
+            public void onGlobalLayout() {
+                if (isShowKeyboard()) {
+                    int keyHeight = mKeyboardRl.getMeasuredHeight();
+                    if (heightPixels - heightEd - finalNavigatorHeight < keyHeight) {
+                        int scrollY = keyHeight - (heightPixels - heightEd - finalNavigatorHeight - mEditText.getHeight());
+                        mParent.setTranslationY(-scrollY);
+                        isTranslation = true;
+                    }
+                }
+
+            }
+        });
 
     }
 
