@@ -3,9 +3,12 @@ package com.example.guojin.keyboarddemo.my;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -18,9 +21,11 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import com.example.guojin.keyboarddemo.R;
 import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
+import com.example.guojin.keyboarddemo.utils.BarConfig;
 import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.reflect.Method;
@@ -33,6 +38,7 @@ import java.lang.reflect.Method;
 public class NumberKeyBoard {
     private Context mContext;
     private NumberKeyBordView mMyKeyboardView;
+    private RelativeLayout mKeyboardRl;
     private EditText mEditText;
     private View mKeyView;
     private ViewGroup mParent;
@@ -50,6 +56,8 @@ public class NumberKeyBoard {
      * 设置焦点，是否点击外部会消失
      */
     private boolean mFocusable = false;
+
+    private boolean isTranslation = false;
 
     public NumberKeyBoard(Builder builder) {
         this.mContext = builder.buildContext;
@@ -74,13 +82,12 @@ public class NumberKeyBoard {
         mWindow.setGravity(Gravity.BOTTOM);
         mWindow.addContentView(mKeyView, new WindowManager.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-        try {
-            mMyKeyboardView = mKeyView.findViewById(R.id.keyboard_view);
-            mMyKeyboardView.setEnabled(true);
-            mMyKeyboardView.setPreviewEnabled(false);
-        } catch (Exception e) {
-            Log.e("mMyKeyboardView", "mMyKeyboardView init failed!");
-        }
+        mKeyboardRl = mKeyView.findViewById(R.id.number_keyboard_rl);
+
+        mMyKeyboardView = mKeyView.findViewById(R.id.number_keyboard_view);
+        mMyKeyboardView.setEnabled(true);
+        mMyKeyboardView.setPreviewEnabled(false);
+
 
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
         if (android.os.Build.VERSION.SDK_INT <= 10) {
@@ -136,7 +143,7 @@ public class NumberKeyBoard {
         mEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if ( KeyBoardUtils.isSoftShowing(scanForActivity(mContext))){
+                if (KeyBoardUtils.isSoftShowing(scanForActivity(mContext))) {
                     KeyBoardUtils.hideSoftKeyboard(scanForActivity(mContext), mEditText);
                 }
                 //点击按钮显示键盘
@@ -150,7 +157,7 @@ public class NumberKeyBoard {
         //点击其他子视图消失
         for (int i = 0; i < mParent.getChildCount(); i++) {
             if (!(mParent.getChildAt(i) instanceof KeyEditText)) {
-                if (mParent.getChildAt(i) instanceof EditText){
+                if (mParent.getChildAt(i) instanceof EditText) {
                     mParent.getChildAt(i).setOnTouchListener(new View.OnTouchListener() {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
@@ -203,6 +210,31 @@ public class NumberKeyBoard {
                 }
             }
         });
+    }
+
+    /**
+     * 解决键盘遮挡问题
+     */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
+    private void setKeyBoardHeight() {
+        int height = mEditText.getHeight();
+        int heightEd = mEditText.getBottom();
+
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        scanForActivity(mContext).getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
+        int heightPixels = outMetrics.heightPixels;
+
+        int navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
+
+        int keyHeight = mKeyboardRl.getMeasuredHeight();
+        if (keyHeight == 0) {
+            keyHeight = heightPixels / 3;
+        }
+        if (heightPixels - heightEd - navigatorHeight < keyHeight) {
+            int scrollY = keyHeight - (heightPixels - heightEd - navigatorHeight - mEditText.getHeight());
+            mParent.setTranslationY(-scrollY);
+            isTranslation = true;
+        }
 
     }
 
@@ -223,6 +255,7 @@ public class NumberKeyBoard {
      * 显示试图
      */
     public void showKeyboard() {
+        setKeyBoardHeight();
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.showanim);
         LayoutAnimationController controller = new LayoutAnimationController(animation);
         controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
@@ -234,6 +267,9 @@ public class NumberKeyBoard {
      * 隐藏试图
      */
     public void hideKeyboard() {
+        if (isTranslation) {
+            mParent.setTranslationY(0);
+        }
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.dismissanim);
         LayoutAnimationController controller = new LayoutAnimationController(animation);
         controller.setOrder(LayoutAnimationController.ORDER_NORMAL);
