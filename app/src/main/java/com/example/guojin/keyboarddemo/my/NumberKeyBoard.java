@@ -38,7 +38,7 @@ public class NumberKeyBoard {
      */
     private int mTextCount;
     /**
-     *  键盘类型
+     *  键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE} （待接入）
      */
     private int mKeyBoardType;
 
