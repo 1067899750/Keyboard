@@ -3,9 +3,7 @@ package com.example.guojin.keyboarddemo.card;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v4.view.ViewConfigurationCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -13,16 +11,12 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
 import com.example.guojin.keyboarddemo.R;
-import com.example.guojin.keyboarddemo.my.NumberKeyBoard;
-import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.ref.WeakReference;
 import java.lang.reflect.Method;
@@ -89,7 +83,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         }
 
         if (mKeyBoardType != 0){
-            mKeyView.setKeyboardType(mKeyBoardType);
+            mKeyView.setKeyBoardType(mKeyBoardType);
         }
 
 

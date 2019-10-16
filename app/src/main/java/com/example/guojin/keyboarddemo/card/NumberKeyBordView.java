@@ -61,7 +61,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     /**
      * 加载键盘的类型
      */
-    private int keyboardType = -1;
+    private int keyBoardType = -1;
     /**
      * 按键背景
      */
@@ -73,7 +73,15 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     private int mPaddingTop;
     private int mPaddingBottom;
     private Keyboard.Key mKey;
+    /**
+     *  是否点击
+     */
     private boolean isClick = false;
+
+    /**
+     *  是否长按
+     */
+    private boolean isLongClick = false;
 
     private OnKeyPressListener mOnKeyPressListener;
 
@@ -102,7 +110,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBordView_topPadding, 1);
         mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBordView_bottomPadding, 1);
         mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBordView_keyTextSize, 15);
-        keyboardType = ta.getInt(R.styleable.ComputerKeyBordView_keyboardType, -1);
+        keyBoardType = ta.getInt(R.styleable.ComputerKeyBordView_keyboardType, -1);
         ta.recycle();
 
         //获取xml中的按键布局
@@ -159,6 +167,11 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
                 drawText(mKey, canvas);
 
             }
+
+            if (isLongClick && !isClick){
+                drawKeyClickBackGround(mKey, canvas);
+                drawText(mKey, canvas);
+            }
         }
 
 
@@ -201,10 +214,10 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
             paint.setTextAlign(Paint.Align.CENTER);
             if (key.codes[0] == KEY_NUMBER_TYPE) {
-                if (keyboardType == PHONE_TYPE) {
+                if (keyBoardType == PHONE_TYPE) {
                     canvas.drawText("-", rect.centerX(), baseline, paint);
 
-                } else if (keyboardType == CARD_TYPE) {
+                } else if (keyBoardType == CARD_TYPE) {
                     canvas.drawText("X", rect.centerX(), baseline, paint);
 
                 }
@@ -259,8 +272,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      *
      * @param type
      */
-    public void setKeyboardType(@KeyBoardType int type) {
-        this.keyboardType = type;
+    public void setKeyBoardType(@KeyBoardType int type) {
+        this.keyBoardType = type;
         invalidate();
     }
 
@@ -284,10 +297,10 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             mOnKeyPressListener.onDeleteKey();
 
         } else if (i == KEY_NUMBER_TYPE && mOnKeyPressListener != null) {
-            if (keyboardType == PHONE_TYPE) {
+            if (keyBoardType == PHONE_TYPE) {
                 mOnKeyPressListener.onInertKey("-");
 
-            } else if (keyboardType == CARD_TYPE) {
+            } else if (keyBoardType == CARD_TYPE) {
                 mOnKeyPressListener.onInertKey("X");
 
             }
@@ -306,6 +319,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         }
         Log.e("---> key : ", "onPress" + " : " + i);
         isClick = true;
+        isLongClick = false;
         setKeyBackground(i);
     }
 

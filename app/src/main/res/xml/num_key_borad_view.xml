@@ -60,7 +60,6 @@
         <Key
             android:codes="-5"
             android:isRepeatable="false"
-            android:keyEdgeFlags="right"
             android:keyIcon="@drawable/identity_card_delete"/>
     </Row>
 

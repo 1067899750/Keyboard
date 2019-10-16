@@ -1,15 +1,11 @@
 package com.example.guojin.keyboarddemo.my;
 
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Build;
-import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -21,7 +17,6 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.LayoutAnimationController;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.guojin.keyboarddemo.R;
@@ -111,7 +106,7 @@ public class NumberKeyBoard {
         }
 
         if (mKeyBoardType != 0) {
-            mMyKeyboardView.setKeyboardType(mKeyBoardType);
+            mMyKeyboardView.setKeyBoardType(mKeyBoardType);
         }
 
     }
