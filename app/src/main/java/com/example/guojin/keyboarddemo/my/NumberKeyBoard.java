@@ -215,7 +215,6 @@ public class NumberKeyBoard {
     /**
      * 解决键盘遮挡问题
      */
-    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     private void setKeyBoardHeight() {
         int height = mEditText.getHeight();
         int heightEd = mEditText.getBottom();
@@ -224,7 +223,10 @@ public class NumberKeyBoard {
         scanForActivity(mContext).getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
         int heightPixels = outMetrics.heightPixels;
 
-        int navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
+        int navigatorHeight = 0;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
+        }
 
         int keyHeight = mKeyboardRl.getMeasuredHeight();
         if (keyHeight == 0) {
@@ -254,6 +256,7 @@ public class NumberKeyBoard {
     /**
      * 显示试图
      */
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public void showKeyboard() {
         setKeyBoardHeight();
         Animation animation = AnimationUtils.loadAnimation(mContext, R.anim.showanim);
