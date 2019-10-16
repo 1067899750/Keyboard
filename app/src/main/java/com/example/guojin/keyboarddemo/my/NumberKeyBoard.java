@@ -229,15 +229,14 @@ public class NumberKeyBoard {
             navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
         }
 
-        final int finalNavigatorHeight = navigatorHeight;
         mKeyboardRl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onGlobalLayout() {
                 if (isShowKeyboard()) {
                     int keyHeight = mKeyboardRl.getMeasuredHeight();
-                    if (heightPixels - heightEd - finalNavigatorHeight < keyHeight) {
-                        int scrollY = keyHeight - (heightPixels - heightEd - finalNavigatorHeight - mEditText.getHeight());
+                    if (mParent.getMeasuredHeight() - heightEd < keyHeight) {
+                        int scrollY = keyHeight - (mParent.getMeasuredHeight() - heightEd);
                         mParent.setTranslationY(-scrollY);
                         isTranslation = true;
                     }
