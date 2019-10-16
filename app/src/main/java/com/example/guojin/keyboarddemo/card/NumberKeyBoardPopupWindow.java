@@ -56,7 +56,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         this.mEditText = builder.buildEditText;
         this.mLocationView = builder.buildView;
         this.mTextCount = builder.buildTextCount;
-;
+        ;
         initView();
     }
 
@@ -119,7 +119,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         //设置位置
         showAtLocation();
         //设置显示内容
-        setListenerViewText(mEditText);
+        setListenerViewText();
 
 
     }
@@ -157,7 +157,6 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
 
     /**
      * 设置位置
-     *
      */
     public void showAtLocation() {
         mEditText.setOnTouchListener(new View.OnTouchListener() {
@@ -174,7 +173,8 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
 
 
     /**
-     *  获取键盘试图
+     * 获取键盘试图
+     *
      * @return
      */
     public NumberKeyBordView getKeyView() {
@@ -183,27 +183,25 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
 
     /**
      * 设置监听变化的 EditText 试图
-     *
-     * @param editText
      */
-    public void setListenerViewText(final EditText editText) {
+    public void setListenerViewText() {
         //设置回调，并进行文本的插入与删除
         mKeyView.setOnKeyPressListener(new NumberKeyBordView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
-                int index = editText.getSelectionStart();
-                Editable editable = editText.getText();
+                int index = mEditText.getSelectionStart();
+                Editable editable = mEditText.getText();
                 editable.insert(index, text);
             }
 
             @Override
             public void onDeleteKey() {
-                int last = editText.getText().length();
+                int last = mEditText.getText().length();
                 if (last > 0) {
                     //删除最后一位
-                    int index = editText.getSelectionStart();
+                    int index = mEditText.getSelectionStart();
                     if (index > 0) {
-                        editText.getText().delete(index - 1, index);
+                        mEditText.getText().delete(index - 1, index);
                     }
                 }
             }

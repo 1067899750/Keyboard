@@ -7,6 +7,8 @@ import android.view.View;
 
 import com.example.guojin.keyboarddemo.card.IdentityCardActivity;
 import com.example.guojin.keyboarddemo.computer.ComputerKeyBoardActivity;
+import com.example.guojin.keyboarddemo.my.NewActivity;
+import com.example.guojin.keyboarddemo.other.OtherActivity;
 
 /**
  * @author puyantao
@@ -19,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        startActivity(new Intent(MainActivity.this, IdentityCardActivity.class));
+//        startActivity(new Intent(MainActivity.this, NewActivity.class));
 
         initEvent();
 
@@ -41,6 +43,23 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, IdentityCardActivity.class));
+            }
+        });
+
+
+        findViewById(R.id.btn_other).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, OtherActivity.class));
+            }
+        });
+
+
+
+        findViewById(R.id.btn_new).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, NewActivity.class));
             }
         });
 
