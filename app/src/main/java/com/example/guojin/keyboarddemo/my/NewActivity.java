@@ -10,8 +10,7 @@ import com.example.guojin.keyboarddemo.R;
 
 public class NewActivity extends AppCompatActivity {
     private EditText mEditText;
-    private View mView;
-    private NumberKeyBoard mKeyboardUtil;
+    private NumberKeyBoard mNumberKeyBoard;
     private RelativeLayout mRelativeLayout;
 
     @Override
@@ -20,23 +19,26 @@ public class NewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_new);
 
         mEditText = findViewById(R.id.et_news);
-        mView = findViewById(R.id.key_board_view);
         mRelativeLayout = findViewById(R.id.rl);
 
-        mKeyboardUtil = new NumberKeyBoard.Builder(this)
+        mNumberKeyBoard = new NumberKeyBoard.Builder(this)
                 .setEditText(mEditText)
-                .setKeyView(mView)
                 .setViewGroup(mRelativeLayout)
+                .setTextCount(18)
                 .Build();
 
 
     }
 
 
-
-
-
-
+    @Override
+    public void onBackPressed() {
+        if (mNumberKeyBoard.isShowKeyboard()){
+            mNumberKeyBoard.hideKeyboard();
+        } else {
+            super.onBackPressed();
+        }
+    }
 }
 
 

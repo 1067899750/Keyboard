@@ -51,7 +51,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     /**
      *  加载键盘的类型
      */
-    private int keyboardType;
+    private int keyboardType = -1;
     /**
      * 按键背景
      */

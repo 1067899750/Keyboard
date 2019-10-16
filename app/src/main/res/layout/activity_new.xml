@@ -14,15 +14,6 @@
         android:textAllCaps="false" />
 
 
-    <include
-        android:id="@+id/key_board_view"
-        layout="@layout/number_key_board_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:visibility="gone"/>
-
-
 </RelativeLayout>
 
 

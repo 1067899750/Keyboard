@@ -56,7 +56,6 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         this.mEditText = builder.buildEditText;
         this.mLocationView = builder.buildView;
         this.mTextCount = builder.buildTextCount;
-        ;
         initView();
     }
 
