@@ -174,7 +174,7 @@ public class NumberKeyBoard {
                 mParent.getChildAt(i).setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (isShowKeyboard()) {
+                        if (isShowKeyboard() && mFocusable) {
                             hideKeyboard();
                         }
                     }
@@ -185,7 +185,7 @@ public class NumberKeyBoard {
         mParent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isShowKeyboard()) {
+                if (isShowKeyboard() && mFocusable) {
                     hideKeyboard();
                 }
             }
