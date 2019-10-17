@@ -118,6 +118,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         setKeyboard(keyboard);
 
         setEnabled(true);
+        //禁止按键的浏览试图
         setPreviewEnabled(false);
         setOnKeyboardActionListener(this);
 

@@ -86,9 +86,6 @@ public class NumberKeyBoard {
         mKeyboardRl = mKeyView.findViewById(R.id.number_keyboard_rl);
 
         mMyKeyboardView = mKeyView.findViewById(R.id.number_keyboard_view);
-        mMyKeyboardView.setEnabled(true);
-        //禁止按键的浏览试图
-        mMyKeyboardView.setPreviewEnabled(false);
 
 
         //自定义键盘光标可以自由移动 适用系统版本为android3.0以上
