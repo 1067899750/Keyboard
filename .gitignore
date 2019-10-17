@@ -3,6 +3,8 @@
 /local.properties
 /.idea/caches/build_file_checksum.ser
 /.idea/libraries
+/.idea/codeStyles
+/.idea/caches
 /.idea/modules.xml
 /.idea/workspace.xml
 .DS_Store
