@@ -217,17 +217,11 @@ public class NumberKeyBoard {
      * 解决键盘遮挡问题
      */
     private void setKeyBoardHeight() {
-        int height = mEditText.getHeight();
         final int heightEd = mEditText.getBottom();
 
         DisplayMetrics outMetrics = new DisplayMetrics();
         scanForActivity(mContext).getWindowManager().getDefaultDisplay().getMetrics(outMetrics);
         final int heightPixels = outMetrics.heightPixels;
-
-        int navigatorHeight = 0;
-        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            navigatorHeight = BarConfig.getNavigationBarHeight(mContext);
-        }
 
         mKeyboardRl.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
