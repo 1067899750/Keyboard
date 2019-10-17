@@ -87,6 +87,7 @@ public class NumberKeyBoard {
 
         mMyKeyboardView = mKeyView.findViewById(R.id.number_keyboard_view);
         mMyKeyboardView.setEnabled(true);
+        //禁止按键的浏览试图
         mMyKeyboardView.setPreviewEnabled(false);
 
 
