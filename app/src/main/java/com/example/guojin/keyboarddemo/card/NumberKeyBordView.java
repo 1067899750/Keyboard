@@ -65,8 +65,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     /**
      * 按键背景
      */
-    private Drawable mKryDrawable;
-    private Drawable mKryClickDrawable;
+    private Drawable mKeyDrawable;
+    private Drawable mKeyClickDrawable;
     private int mKeySize;
     private int mPaddingLeft;
     private int mPaddingRight;
@@ -99,8 +99,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBordView);
-        mKryDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyBackgBackground);
-        mKryClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyClickBackgBackground);
+        mKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyBackgBackground);
+        mKeyClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyClickBackgBackground);
         //删除按键颜色
         mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_deleteDrawable);
         //keyboard背景颜色
@@ -252,8 +252,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      * @param canvas
      */
     private void drawKeyBackGround(Keyboard.Key key, Canvas canvas) {
-        mKryDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-        mKryDrawable.draw(canvas);
+        mKeyDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        mKeyDrawable.draw(canvas);
     }
 
     /**
@@ -263,8 +263,8 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      * @param canvas
      */
     private void drawKeyClickBackGround(Keyboard.Key key, Canvas canvas) {
-        mKryClickDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
-        mKryClickDrawable.draw(canvas);
+        mKeyClickDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
+        mKeyClickDrawable.draw(canvas);
     }
 
 
