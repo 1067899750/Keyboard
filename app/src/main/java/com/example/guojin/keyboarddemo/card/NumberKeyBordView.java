@@ -143,12 +143,12 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             for (Keyboard.Key key : keys) {
                 if (key.codes[0] == Keyboard.KEYCODE_DELETE) {
                     //数字键背景
-                    drawKeyBackGround(key, canvas);
+                    drawKeyBackground(key, canvas);
                     //绘制删除键背景
                     drawDeleteBitmap(key, canvas);
                 } else {
                     //数字键背景
-                    drawKeyBackGround(key, canvas);
+                    drawKeyBackground(key, canvas);
                 }
 
                 if (key.label != null) {
@@ -160,17 +160,17 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         if (mKey != null) {
             if (isClick) {
                 //点击时的背景
-                drawKeyClickBackGround(mKey, canvas);
+                drawKeyClickBackground(mKey, canvas);
                 drawText(mKey, canvas);
             } else {
                 //数字键背景
-                drawKeyBackGround(mKey, canvas);
+                drawKeyBackground(mKey, canvas);
                 drawText(mKey, canvas);
 
             }
 
             if (isLongClick && !isClick){
-                drawKeyClickBackGround(mKey, canvas);
+                drawKeyClickBackground(mKey, canvas);
                 drawText(mKey, canvas);
             }
         }
@@ -251,7 +251,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      * @param key
      * @param canvas
      */
-    private void drawKeyBackGround(Keyboard.Key key, Canvas canvas) {
+    private void drawKeyBackground(Keyboard.Key key, Canvas canvas) {
         mKeyDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         mKeyDrawable.draw(canvas);
     }
@@ -262,7 +262,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      * @param key
      * @param canvas
      */
-    private void drawKeyClickBackGround(Keyboard.Key key, Canvas canvas) {
+    private void drawKeyClickBackground(Keyboard.Key key, Canvas canvas) {
         mKeyClickDrawable.setBounds(key.x, key.y, key.x + key.width, key.y + key.height);
         mKeyClickDrawable.draw(canvas);
     }
