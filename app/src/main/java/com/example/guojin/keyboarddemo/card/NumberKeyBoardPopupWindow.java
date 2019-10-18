@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
  */
 public class NumberKeyBoardPopupWindow extends PopupWindow {
     private View mPopView;
-    private NumberKeyBordView mKeyView;
+    private NumberKeyBoardView mKeyView;
     private WeakReference<Context> mWeakReference;
     private EditText mEditText;
     private View mLocationView;
@@ -45,7 +45,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
      */
     private float eventY;
     /**
-     * 键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+     * 键盘类型{@link NumberKeyBoardView#PHONE_TYPE}、{@link NumberKeyBoardView#CARD_TYPE}
      */
     private int mKeyBoardType;
 
@@ -182,7 +182,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
      *
      * @return
      */
-    public NumberKeyBordView getKeyView() {
+    public NumberKeyBoardView getKeyView() {
         return mKeyView;
     }
 
@@ -191,7 +191,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
      */
     public void setListenerViewText() {
         //设置回调，并进行文本的插入与删除
-        mKeyView.setOnKeyPressListener(new NumberKeyBordView.OnKeyPressListener() {
+        mKeyView.setOnKeyPressListener(new NumberKeyBoardView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
                 int index = mEditText.getSelectionStart();
@@ -268,11 +268,11 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         }
 
         /**
-         * 设置键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+         * 设置键盘类型{@link NumberKeyBoardView#PHONE_TYPE}、{@link NumberKeyBoardView#CARD_TYPE}
          *
          * @return
          */
-        public Builder setKeyBoardType(@NumberKeyBordView.KeyBoardType int type) {
+        public Builder setKeyBoardType(@NumberKeyBoardView.KeyBoardType int type) {
             this.buildKeyBoardType = type;
             return this;
         }

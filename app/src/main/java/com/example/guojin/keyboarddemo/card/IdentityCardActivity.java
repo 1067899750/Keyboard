@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
-import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -35,7 +34,7 @@ public class IdentityCardActivity extends AppCompatActivity {
                 .setLocationView(mLinearLayout)
                 .setBuildEditText(mEditText)
                 .setTextCount(18)
-                .setKeyBoardType(NumberKeyBordView.PHONE_TYPE)
+                .setKeyBoardType(NumberKeyBoardView.PHONE_TYPE)
                 .create();
 
         //输入结束点击键盘确认键执行的 方法

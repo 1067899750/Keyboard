@@ -36,7 +36,7 @@ import java.lang.reflect.Method;
 public class ComputerKeyBoardActivity extends AppCompatActivity {
 
     private EditText mEditText;
-    private ComputerKeyBordView mKeyView;
+    private ComputerKeyBaordView mKeyView;
     private LinearLayout mLinearLayout;
     private PopupWindow mPop;
     private View mPopView;
@@ -152,7 +152,7 @@ public class ComputerKeyBoardActivity extends AppCompatActivity {
 
 
         //设置回调，并进行文本的插入与删除
-        mKeyView.setOnKeyPressListener(new ComputerKeyBordView.OnKeyPressListener() {
+        mKeyView.setOnKeyPressListener(new ComputerKeyBaordView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
                 int index = mEditText.getSelectionStart();

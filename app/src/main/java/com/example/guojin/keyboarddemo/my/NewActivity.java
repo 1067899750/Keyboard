@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 
 import com.example.guojin.keyboarddemo.R;
-import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
+import com.example.guojin.keyboarddemo.card.NumberKeyBoardView;
 
 public class NewActivity extends AppCompatActivity {
     private KeyEditText mEditText;
@@ -23,7 +23,7 @@ public class NewActivity extends AppCompatActivity {
         mNumberKeyBoard = new NumberKeyBoard.Builder(this)
                 .setEditText(mEditText)
                 .setViewGroup(mRelativeLayout)
-                .setKeyBoardType(NumberKeyBordView.PHONE_TYPE)
+                .setKeyBoardType(NumberKeyBoardView.PHONE_TYPE)
                 .setTextLength(18)
                 .setFocusable(true)
                 .Build();

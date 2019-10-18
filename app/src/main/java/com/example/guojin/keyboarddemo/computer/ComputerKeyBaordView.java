@@ -24,7 +24,7 @@ import java.util.List;
  * @description
  * @date 2019/10/14 11:44
  */
-public class ComputerKeyBordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
+public class ComputerKeyBaordView extends KeyboardView implements KeyboardView.OnKeyboardActionListener {
     /**
      * 用于区分左下角空白按键,(要与xml里设置的数值相同)
      */
@@ -49,29 +49,29 @@ public class ComputerKeyBordView extends KeyboardView implements KeyboardView.On
 
     private OnKeyPressListener mOnKeyPressListener;
 
-    public ComputerKeyBordView(Context context, AttributeSet attrs) {
+    public ComputerKeyBaordView(Context context, AttributeSet attrs) {
         super(context, attrs);
         init(context, attrs, 0);
     }
 
-    public ComputerKeyBordView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public ComputerKeyBaordView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(context, attrs, defStyleAttr);
     }
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBordView);
-        mKryDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyBackgBackground);
-        mKryClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_keyClickBackgBackground);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBaordView);
+        mKryDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_keyBackgBackground);
+        mKryClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_keyClickBackgBackground);
         //删除按键颜色
-        mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBordView_deleteDrawable);
+        mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_deleteDrawable);
         //keyboard背景颜色
-        mKeyboardBackground = ta.getColor(R.styleable.ComputerKeyBordView_keyboardBackgBackground, Color.WHITE);
-        mPaddingLeft = (int) ta.getDimension(R.styleable.ComputerKeyBordView_leftPadding, 1);
-        mPaddingRight = (int) ta.getDimension(R.styleable.ComputerKeyBordView_rightPadding, 1);
-        mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBordView_topPadding, 1);
-        mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBordView_bottomPadding, 1);
-        mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBordView_keyTextSize, 15);
+        mKeyboardBackground = ta.getColor(R.styleable.ComputerKeyBaordView_keyboardBackgBackground, Color.WHITE);
+        mPaddingLeft = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_leftPadding, 1);
+        mPaddingRight = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_rightPadding, 1);
+        mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_topPadding, 1);
+        mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_bottomPadding, 1);
+        mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_keyTextSize, 15);
         ta.recycle();
 
         //获取xml中的按键布局

@@ -9,7 +9,6 @@ import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -25,8 +24,7 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 
 import com.example.guojin.keyboarddemo.R;
-import com.example.guojin.keyboarddemo.card.NumberKeyBordView;
-import com.example.guojin.keyboarddemo.utils.BarConfig;
+import com.example.guojin.keyboarddemo.card.NumberKeyBoardView;
 import com.example.guojin.keyboarddemo.utils.KeyBoardUtils;
 
 import java.lang.reflect.Method;
@@ -38,7 +36,7 @@ import java.lang.reflect.Method;
  */
 public class NumberKeyBoard {
     private Context mContext;
-    private NumberKeyBordView mMyKeyboardView;
+    private NumberKeyBoardView mMyKeyboardView;
     private RelativeLayout mKeyboardRl;
     private EditText mEditText;
     private View mKeyView;
@@ -49,7 +47,7 @@ public class NumberKeyBoard {
      */
     private int mTextCount;
     /**
-     * 键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+     * 键盘类型{@link NumberKeyBoardView#PHONE_TYPE}、{@link NumberKeyBoardView#CARD_TYPE}
      */
     private int mKeyBoardType;
 
@@ -189,7 +187,7 @@ public class NumberKeyBoard {
         });
 
         //设置回调，并进行文本的插入与删除
-        mMyKeyboardView.setOnKeyPressListener(new NumberKeyBordView.OnKeyPressListener() {
+        mMyKeyboardView.setOnKeyPressListener(new NumberKeyBoardView.OnKeyPressListener() {
             @Override
             public void onInertKey(String text) {
                 int index = mEditText.getSelectionStart();
@@ -329,11 +327,11 @@ public class NumberKeyBoard {
         }
 
         /**
-         * 设置键盘类型{@link NumberKeyBordView#PHONE_TYPE}、{@link NumberKeyBordView#CARD_TYPE}
+         * 设置键盘类型{@link NumberKeyBoardView#PHONE_TYPE}、{@link NumberKeyBoardView#CARD_TYPE}
          *
          * @return
          */
-        public Builder setKeyBoardType(@NumberKeyBordView.KeyBoardType int type) {
+        public Builder setKeyBoardType(@NumberKeyBoardView.KeyBoardType int type) {
             this.buildKeyBoardType = type;
             return this;
         }

@@ -12,7 +12,7 @@
         android:background="#D1D5DB"
         android:layout_alignParentBottom="true">
 
-        <com.example.guojin.keyboarddemo.card.NumberKeyBordView
+        <com.example.guojin.keyboarddemo.card.NumberKeyBoardView
             android:id="@+id/number_keyboard_view"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"

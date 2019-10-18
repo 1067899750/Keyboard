@@ -28,7 +28,7 @@
         android:layout_below="@id/iv_hide"
         android:background="@color/cCDCDCD">
 
-        <com.example.guojin.keyboarddemo.computer.ComputerKeyBordView
+        <com.example.guojin.keyboarddemo.computer.ComputerKeyBaordView
             android:id="@+id/keyboardview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
