@@ -61,7 +61,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
     /**
      * 加载键盘的类型
      */
-    private int keyBoardType = -1;
+    private int mKeyBoardType = -1;
     /**
      * 按键背景
      */
@@ -110,7 +110,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
         mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBordView_topPadding, 1);
         mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBordView_bottomPadding, 1);
         mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBordView_keyTextSize, 15);
-        keyBoardType = ta.getInt(R.styleable.ComputerKeyBordView_keyboardType, -1);
+        mKeyBoardType = ta.getInt(R.styleable.ComputerKeyBordView_keyboardType, -1);
         ta.recycle();
 
         //获取xml中的按键布局
@@ -215,10 +215,10 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             // 下面这行是实现水平居中，drawText对应改为传入targetRect.centerX()
             paint.setTextAlign(Paint.Align.CENTER);
             if (key.codes[0] == KEY_NUMBER_TYPE) {
-                if (keyBoardType == PHONE_TYPE) {
+                if (mKeyBoardType == PHONE_TYPE) {
                     canvas.drawText("-", rect.centerX(), baseline, paint);
 
-                } else if (keyBoardType == CARD_TYPE) {
+                } else if (mKeyBoardType == CARD_TYPE) {
                     canvas.drawText("X", rect.centerX(), baseline, paint);
 
                 }
@@ -274,7 +274,7 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
      * @param type
      */
     public void setKeyBoardType(@KeyBoardType int type) {
-        this.keyBoardType = type;
+        this.mKeyBoardType = type;
         invalidate();
     }
 
@@ -298,10 +298,10 @@ public class NumberKeyBordView extends KeyboardView implements KeyboardView.OnKe
             mOnKeyPressListener.onDeleteKey();
 
         } else if (i == KEY_NUMBER_TYPE && mOnKeyPressListener != null) {
-            if (keyBoardType == PHONE_TYPE) {
+            if (mKeyBoardType == PHONE_TYPE) {
                 mOnKeyPressListener.onInertKey("-");
 
-            } else if (keyBoardType == CARD_TYPE) {
+            } else if (mKeyBoardType == CARD_TYPE) {
                 mOnKeyPressListener.onInertKey("X");
 
             }
