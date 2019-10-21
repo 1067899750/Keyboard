@@ -140,12 +140,15 @@ public class NumberKeyBoard {
         mEditText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if (KeyBoardUtils.isSoftShowing(scanForActivity(mContext))) {
-                    KeyBoardUtils.hideSoftKeyboard(scanForActivity(mContext), mEditText);
-                }
-                //点击按钮显示键盘
-                if (!isShowKeyboard()) {
-                    showKeyboard();
+                //防止该事件被执行两次
+                if (event.getAction() == MotionEvent.ACTION_UP) {
+                    if (KeyBoardUtils.isSoftShowing(scanForActivity(mContext))) {
+                        KeyBoardUtils.hideSoftKeyboard(scanForActivity(mContext), mEditText);
+                    }
+                    //点击按钮显示键盘
+                    if (!isShowKeyboard()) {
+                        showKeyboard();
+                    }
                 }
                 return false;
             }
@@ -159,8 +162,10 @@ public class NumberKeyBoard {
                         @Override
                         public boolean onTouch(View v, MotionEvent event) {
                             //点击按钮显示键盘
-                            if (isShowKeyboard()) {
-                                hideKeyboard();
+                            if (event.getAction() == MotionEvent.ACTION_UP) {
+                                if (isShowKeyboard()) {
+                                    hideKeyboard();
+                                }
                             }
                             return false;
                         }
