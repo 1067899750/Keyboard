@@ -357,7 +357,7 @@ public class NumberKeyBoard {
          *
          * @return
          */
-        public NumberKeyBoard Build() {
+        public NumberKeyBoard build() {
             return new NumberKeyBoard(this);
         }
 

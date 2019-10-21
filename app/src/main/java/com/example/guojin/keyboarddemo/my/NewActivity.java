@@ -26,7 +26,7 @@ public class NewActivity extends AppCompatActivity {
                 .setKeyBoardType(NumberKeyBoardView.PHONE_TYPE)
                 .setTextLength(18)
                 .setFocusable(true)
-                .Build();
+                .build();
 
 
     }
