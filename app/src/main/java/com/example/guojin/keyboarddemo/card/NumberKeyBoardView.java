@@ -98,19 +98,19 @@ public class NumberKeyBoardView extends KeyboardView implements KeyboardView.OnK
 
 
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBaordView);
-        mKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_keyBackgBackground);
-        mKeyClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_keyClickBackgBackground);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.ComputerKeyBoardView);
+        mKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBoardView_keyBackgBackground);
+        mKeyClickDrawable = ta.getDrawable(R.styleable.ComputerKeyBoardView_keyClickBackgBackground);
         //删除按键颜色
-        mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBaordView_deleteDrawable);
+        mDeleteKeyDrawable = ta.getDrawable(R.styleable.ComputerKeyBoardView_deleteDrawable);
         //keyboard背景颜色
-        mKeyboardBackground = ta.getColor(R.styleable.ComputerKeyBaordView_keyboardBackgBackground, Color.WHITE);
-        mPaddingLeft = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_leftPadding, 1);
-        mPaddingRight = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_rightPadding, 1);
-        mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_topPadding, 1);
-        mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_bottomPadding, 1);
-        mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBaordView_keyTextSize, 15);
-        mKeyBoardType = ta.getInt(R.styleable.ComputerKeyBaordView_keyboardType, -1);
+        mKeyboardBackground = ta.getColor(R.styleable.ComputerKeyBoardView_keyboardBackgBackground, Color.WHITE);
+        mPaddingLeft = (int) ta.getDimension(R.styleable.ComputerKeyBoardView_leftPadding, 1);
+        mPaddingRight = (int) ta.getDimension(R.styleable.ComputerKeyBoardView_rightPadding, 1);
+        mPaddingTop = (int) ta.getDimension(R.styleable.ComputerKeyBoardView_topPadding, 1);
+        mPaddingBottom = (int) ta.getDimension(R.styleable.ComputerKeyBoardView_bottomPadding, 1);
+        mKeySize = (int) ta.getDimension(R.styleable.ComputerKeyBoardView_keyTextSize, 15);
+        mKeyBoardType = ta.getInt(R.styleable.ComputerKeyBoardView_keyboardType, -1);
         ta.recycle();
 
         //获取xml中的按键布局
