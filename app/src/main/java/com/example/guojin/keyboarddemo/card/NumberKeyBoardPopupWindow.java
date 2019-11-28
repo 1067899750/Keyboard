@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.PopupWindow;
 
@@ -168,6 +169,7 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
 
             @Override
             public boolean onTouch(View v, MotionEvent event) {
+                hideSoftKeyboard(scanForActivity(mWeakReference.get()));
                 //点击按钮显示键盘
                 showAtLocation(mLocationView, Gravity.BOTTOM, 0, 0);
                 return false;
@@ -175,6 +177,18 @@ public class NumberKeyBoardPopupWindow extends PopupWindow {
         });
 
     }
+
+    /**
+     * 隐藏软键盘(只适用于Activity，不适用于Fragment)
+     */
+    public static void hideSoftKeyboard(Activity activity) {
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+    }
+
 
 
     /**

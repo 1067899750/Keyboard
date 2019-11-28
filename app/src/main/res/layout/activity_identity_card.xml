@@ -6,13 +6,17 @@
     android:layout_height="match_parent"
     tools:context=".card.IdentityCardActivity">
 
-    <EditText
+    <com.example.guojin.keyboarddemo.my.KeyEditText
         android:id="@+id/et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="50dp"
         android:textAllCaps="false" />
 
+    <EditText
+        android:layout_marginTop="200dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 
 
 </RelativeLayout>

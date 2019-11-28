@@ -10,6 +10,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.guojin.keyboarddemo.R;
+import com.example.guojin.keyboarddemo.my.KeyEditText;
 
 /**
  * @author puyantao
@@ -17,7 +18,7 @@ import com.example.guojin.keyboarddemo.R;
  * @date 2019/10/14 11:39
  */
 public class IdentityCardActivity extends AppCompatActivity {
-    private EditText mEditText;
+    private KeyEditText mEditText;
     private RelativeLayout mLinearLayout;
     private NumberKeyBoardPopupWindow mNumberKeyBoardPopupWindow;
 
